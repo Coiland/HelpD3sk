@@ -1,3 +1,6 @@
+/*
+--------Author: Insteadof2--------
+*/
 #ifndef FOLDCREATION_H
 #define FOLDCREATION_H
 typedef struct headfolders headfolders;
