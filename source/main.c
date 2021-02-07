@@ -4,12 +4,14 @@
 #include "headers.h"
 #include "foldcreation.h"
 
+
 #define CLEAR_COLOR 0x68B0D8FF
 
 #define DISPLAY_TRANSFER_FLAGS \
 	(GX_TRANSFER_FLIP_VERT(0) | GX_TRANSFER_OUT_TILED(0) | GX_TRANSFER_RAW_COPY(0) | \
 	GX_TRANSFER_IN_FORMAT(GX_TRANSFER_FMT_RGBA8) | GX_TRANSFER_OUT_FORMAT(GX_TRANSFER_FMT_RGB8) | \
 	GX_TRANSFER_SCALING(GX_TRANSFER_SCALE_NO))
+headfolders* focus;
 
 // typedef struct vertex
 // { 
@@ -29,13 +31,13 @@ static const vertex vertex_list[] =
 	// { {80.0f, 140.0f, -400.0f }},
 	// { {280.0f, 40.0f, -400.0f} },
 
-	{ {60.0f, 160.0f, 200.0f} },
-	{ {260.0f, 160.0f, 200.0f} },
-	{ {60.0f, 210.0f, 200.0f }},
+	{ {60.0f, 186.0f, 150.0f} },
+	{ {260.0f, 186.0f, 150.0f} },
+	{ {60.0f, 236.0f, 150.0f }},
 		
-	{ {260.0f, 210.0f, 200.0f} },
-	{ {60.0f, 210.0f, 200.0f }},
-	{ {260.0f, 160.0f, 200.0f} },
+	{ {260.0f, 236.0f, 150.0f} },
+	{ {60.0f, 236.0f, 150.0f }},
+	{ {260.0f, 186.0f, 150.0f} },
 };
 
 #define vertex_list_count (sizeof(vertex_list)/sizeof(vertex_list[0]))
@@ -50,7 +52,38 @@ static void* BUFFER_DATA;
 void createFolders()
 {
 	addfolderhead("first");
+	focus=kinghead;
 	addfolderhead("second");
+}
+void tapFocus(float x, float y)
+{
+	int i =4;
+	
+	x=(((x+155)*320)/309) -160;
+	y=(((y-115)*240)/229) +120;
+	printf("\x1b[2;0H %f: %f",x,y);
+	if(kinghead!=NULL)
+	{
+		
+		headfolders *temp = kinghead;
+		while(temp!=NULL)
+		{
+			printf("\x1b[%d;0H%f:%f",i,temp->x,temp->y);
+			if((x>= temp->x )&& (x<=(temp->x+200)))
+			{
+				if ((y<= temp->y )&& (y>=(temp->y-50)))
+				{
+					focus=temp;
+					return;
+				}
+				
+			}
+			temp=temp->next;
+			i++;
+		}
+
+	}
+	
 }
 void setupBuffs()
 {
@@ -83,7 +116,7 @@ void display(s16 i)
 {
 	// static s16 c ;
 	// c+=i;
-	printf("\x1b[4;0H%03d", i);
+	//printf("\x1b[4;0H%03d", i);
 	
 	//Mtx_Translate(&MV,-160.0f,-120.0f+i,0.0f,true);
 	C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_projection, &P);
@@ -99,8 +132,15 @@ void display(s16 i)
 
 		Mtx_Identity(&MV);
 		Mtx_Translate(&MV,-160.0f,-120.0f-y*70.0+i,0.0f,true);
+		if(temp==focus)
+		{
+			printf("\x1b[8;0H Focus name is %s", temp->name);
+		}
 		C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_modelview, &MV);
 		C3D_DrawArrays(GPU_TRIANGLES, 0, 6);
+		//x and y from upper left 
+		temp->x= -100;
+		temp->y= -120.0f-y*70.0+i+236;
 		temp=temp->next;
 		y++;
 	}
@@ -123,15 +163,20 @@ int main(int argc, char* argv[])
 	u16 ytemp=0;
 	u16 first=0;
 	u16 hold=0;
+	u16 penx=0;
+	u16 peny=0;
 	u8 i=0;
+	u8 holdcount=0;
+	u8 tapflag=0;
 
 	consoleInit(GFX_TOP, NULL);
 	C3D_RenderTarget* bottom = C3D_RenderTargetCreate(240, 320, GPU_RB_RGBA8, GPU_RB_DEPTH24_STENCIL8);
 	C3D_RenderTargetSetOutput(bottom, GFX_BOTTOM, GFX_LEFT, DISPLAY_TRANSFER_FLAGS);
-	
+
 	
 	setupBuffs();
 	createFolders();
+	int z =0;
 	while (aptMainLoop())
 	{
 		
@@ -142,30 +187,57 @@ int main(int argc, char* argv[])
 		
 			//reads the current touch position 
 		hidTouchRead(&screen);
-		if(i==0 && screen.py!=0)
+		//  && (screen.py!=0||screen.px!=0)
+		if(i==0&& (screen.py!=0||screen.px!=0))
 		{
 			first=screen.py + hold;
 			i=1;
+			holdcount++;
+		}
+		else if (i==1 && (abs(screen.py-peny)<6)&& (abs(screen.px-penx)<6))
+		{
+			holdcount++;
 		}
 		ytemp=-screen.py+first;
-		if(screen.py==0 )
+		// && screen.py==0 && screen.px==0
+		if(screen.py==0 && screen.px==0)
 		{
 			ytemp=hold;
+			if(i==1)
+			{
+				if(holdcount<20)
+				{
+					tapflag=1;
+				}
+			holdcount =0;
+			}
 			i=0;
 		}
-	
-		printf("\x1b[2;0H%03d; %03d", screen.px, screen.py);
-		printf("\x1b[3;0H%03d", ytemp);
 		
-			
+		// if(screen.py !=0)
+		// {
+		printf("\x1b[5;10H%03d; %03d", screen.px, screen.py);
+		// 	z++;
+		// //}
+		
+		if(tapflag==1)
+		{
+			tapFocus(penx,peny);
+			tapflag=0;
+		}
+		//printf("\x1b[3;0H%03d", ytemp);
+		
+		
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		C3D_RenderTargetClear(bottom,C3D_CLEAR_ALL,C3D_CLEAR_COLOR,0);
 		C3D_FrameDrawOn(bottom);
 		
 		display(ytemp);
 		hold=ytemp;
-		C3D_FrameEnd(0);
+		penx=screen.px;
+		peny=screen.py;
 		
+		C3D_FrameEnd(0);
 	}
 
 	sceneExit();

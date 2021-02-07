@@ -1,8 +1,13 @@
+/*
+--------Author: Insteadof2--------
+*/
+
 #include "headers.h"
 #include "foldcreation.h"
 
 headfolders* kinghead=NULL; 
 headfolders* kingtail=NULL;
+
 /*!
  * @param       name     Name to be displayed on the button
  * @param       text     Text explaining the button to be 
