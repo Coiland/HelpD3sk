@@ -31,13 +31,13 @@ static const vertex vertex_list[] =
 	// { {80.0f, 140.0f, -400.0f }},
 	// { {280.0f, 40.0f, -400.0f} },
 
-	{ {60.0f, 186.0f, 150.0f} },
-	{ {260.0f, 186.0f, 150.0f} },
-	{ {60.0f, 236.0f, 150.0f }},
+	{ {60.0f, 186.0f, 200.0f} },
+	{ {260.0f, 186.0f, 200.0f} },
+	{ {60.0f, 236.0f, 200.0f }},
 		
-	{ {260.0f, 236.0f, 150.0f} },
-	{ {60.0f, 236.0f, 150.0f }},
-	{ {260.0f, 186.0f, 150.0f} },
+	{ {260.0f, 236.0f, 200.0f} },
+	{ {60.0f, 236.0f, 200.0f }},
+	{ {260.0f, 186.0f, 200.0f} },
 };
 
 #define vertex_list_count (sizeof(vertex_list)/sizeof(vertex_list[0]))
@@ -59,9 +59,9 @@ void tapFocus(float x, float y)
 {
 	int i =4;
 	
-	x=(((x+155)*320)/309) -160;
-	y=(((y-115)*240)/229) +120;
-	printf("\x1b[2;0H %f: %f",x,y);
+	x=-160+(((x-5)*320)/309) ;
+	y=120-(((y-5)*240)/229) ;
+	printf("\x1b[40;0H%03f; %03f", x, y);
 	if(kinghead!=NULL)
 	{
 		
@@ -79,7 +79,7 @@ void tapFocus(float x, float y)
 				
 			}
 			temp=temp->next;
-			i++;
+			i+=2;
 		}
 
 	}
@@ -134,7 +134,7 @@ void display(s16 i)
 		Mtx_Translate(&MV,-160.0f,-120.0f-y*70.0+i,0.0f,true);
 		if(temp==focus)
 		{
-			printf("\x1b[8;0H Focus name is %s", temp->name);
+			printf("\x1b[12;0H Focus name is %s", temp->name);
 		}
 		C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_modelview, &MV);
 		C3D_DrawArrays(GPU_TRIANGLES, 0, 6);
@@ -216,7 +216,7 @@ int main(int argc, char* argv[])
 		
 		// if(screen.py !=0)
 		// {
-		printf("\x1b[5;10H%03d; %03d", screen.px, screen.py);
+		printf("\x1b[20;10H%03d; %03d", screen.px, screen.py);
 		// 	z++;
 		// //}
 		
