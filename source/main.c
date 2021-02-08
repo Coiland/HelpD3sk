@@ -3,7 +3,7 @@
 */
 #include "headers.h"
 #include "foldcreation.h"
-
+u8 fov =80;
 
 #define CLEAR_COLOR 0x68B0D8FF
 
@@ -31,13 +31,13 @@ static const vertex vertex_list[] =
 	// { {80.0f, 140.0f, -400.0f }},
 	// { {280.0f, 40.0f, -400.0f} },
 
-	{ {60.0f, 186.0f, 200.0f} },
-	{ {260.0f, 186.0f, 200.0f} },
-	{ {60.0f, 236.0f, 200.0f }},
+	{ {60.0f, 186.0f, 0.1f} },
+	{ {260.0f, 186.0f, 0.1f} },
+	{ {60.0f, 236.0f,  0.1f }},
 		
-	{ {260.0f, 236.0f, 200.0f} },
-	{ {60.0f, 236.0f, 200.0f }},
-	{ {260.0f, 186.0f, 200.0f} },
+	{ {260.0f, 236.0f, 0.1f} },
+	{ {60.0f, 236.0f, 0.1f }},
+	{ {260.0f, 186.0f, 0.1f} },
 };
 
 #define vertex_list_count (sizeof(vertex_list)/sizeof(vertex_list[0]))
@@ -102,7 +102,8 @@ void setupBuffs()
 
 	// C3D_FixedAttribSet(1, 1.0, 1.0, 1.0, 1.0);
 	// Mtx_OrthoTilt(&P, 0.0, 320.0, 0.0, 240.0, 0.0, 1.0, true);
-	Mtx_PerspTilt(&P, C3D_AngleFromDegrees(80.0f), 320/240, 0.01f, 1000.0f,  true);
+	
+
 	// Mtx_Persp(&P, C3D_AngleFromDegrees(80.0f), 320/240, 0.01f, 1000.0f,  true);
 	BUFFER_DATA = linearAlloc(sizeof(vertex_list));
 	memcpy(BUFFER_DATA , vertex_list, sizeof(vertex_list));
@@ -116,9 +117,10 @@ void display(s16 i)
 {
 	// static s16 c ;
 	// c+=i;
-	//printf("\x1b[4;0H%03d", i);
+	printf("\x1b[4;20H fov is : %03d", fov);
 	
 	//Mtx_Translate(&MV,-160.0f,-120.0f+i,0.0f,true);
+	Mtx_PerspTilt(&P, C3D_AngleFromDegrees(atan2(240,0.1)*360/M_PI), 320/240, 0.1f, 1000.0f,  true);
 	C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_projection, &P);
 	
 	headfolders* temp = kinghead;
@@ -184,6 +186,10 @@ int main(int argc, char* argv[])
 		u32 kDown = hidKeysDown();
 		if (kDown & KEY_START)
 			break; // break in order to return to hbmen
+		else if(kDown& KEY_A)
+		{
+			fov++;
+		}
 		
 			//reads the current touch position 
 		hidTouchRead(&screen);
