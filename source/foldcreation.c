@@ -32,18 +32,35 @@ headfolders* kingtail=NULL;
  {
 
  }
- int addfolder(char* text,char * name, char* headname) 
+void addfolder(char* text,char * name, char* headname) 
  {
-        folders* temp=(folders*)malloc(sizeof(folders));
+    headfolders *temp=kinghead;
+    while(strcmp(headname,temp->name)!=0)
+    {
         if(temp==NULL)
         {
-            printf("Invalid heap allocation in addfolder");
-            return 0;
-
-        }
-      
-        temp->next=NULL;
-    return 1;
+            return;
+        }  
+    }
+    folders* new=(folders*)malloc(sizeof(folders));
+    if(new==NULL)
+    {
+        printf("Invalid heap allocation while creating head folder");
+        return;
+    }
+    if (temp==NULL)
+    {
+        temp->head=new;
+    }
+    else
+    {
+        new->prev = temp->tail;  
+        temp->tail=new;
+    }
+   
+    new->name=name;
+    new->next=NULL;
+    new->text=text;
  }
 
  void addfolderhead(char* name)

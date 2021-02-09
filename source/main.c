@@ -51,9 +51,11 @@ static C3D_Mtx P;
 static void* BUFFER_DATA;
 void createFolders()
 {
+	//dont put anything in focus initially
 	addfolderhead("first");
 	focus=kinghead;
 	addfolderhead("second");
+	addfolder("sup","mombo","second");
 }
 void tapFocus(float x, float y)
 {
@@ -113,6 +115,32 @@ void setupBuffs()
 	BufInfo_Add(bufInfo, BUFFER_DATA , sizeof(vertex), 1, 0x0);
 
 }
+void subdisplay(folders* top,s16 i)
+{
+	folders* temp = top;
+	if (temp==NULL)
+	{
+		return;
+	}
+	u8 y=0;
+	while(temp!=NULL)
+	{
+		Mtx_Identity(&MV);
+		Mtx_Translate(&MV,-160.0f,-120.0f-y*70.0+i,0.0f,true);
+		// if(temp==focus)
+		// {
+		// 	printf("\x1b[12;0H Focus name is %s", temp->name);
+		// }
+		C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_modelview, &MV);
+		C3D_DrawArrays(GPU_TRIANGLES, 0, 6);
+		//x and y from upper left 
+		temp->x= -100;
+		temp->y= -120.0f-y*70.0+i+236;
+		temp=temp->next;
+		y++;
+	}
+
+}
 void display(s16 i)
 {
 	// static s16 c ;
@@ -128,6 +156,16 @@ void display(s16 i)
 	{
 		return;
 	}
+	while(temp!=NULL)
+	{
+		if(temp==focus)
+		{
+			subdisplay(temp->head,i);
+			return;
+		}
+		temp=temp->next;
+	}
+
 	u8 y=0;
 	while(temp!=NULL)
 	{

@@ -24,4 +24,5 @@ struct headfolders
 extern headfolders* kinghead; 
 extern headfolders* kingtail;
 void addfolderhead(char* );
+void addfolder(char* text,char * name, char* headname);
 #endif
