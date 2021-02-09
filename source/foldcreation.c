@@ -37,18 +37,21 @@ void addfolder(char* text,char * name, char* headname)
     headfolders *temp=kinghead;
     while(strcmp(headname,temp->name)!=0)
     {
+        temp=temp->next;
         if(temp==NULL)
         {
             return;
         }  
+        
     }
+   
     folders* new=(folders*)malloc(sizeof(folders));
     if(new==NULL)
     {
         printf("Invalid heap allocation while creating head folder");
         return;
     }
-    if (temp==NULL)
+    if (temp->head==NULL)
     {
         temp->head=new;
     }
@@ -59,8 +62,11 @@ void addfolder(char* text,char * name, char* headname)
     }
    
     new->name=name;
+    // printf("\x1b[14;0H Focus name is %s", new->name);
     new->next=NULL;
     new->text=text;
+     
+    
  }
 
  void addfolderhead(char* name)

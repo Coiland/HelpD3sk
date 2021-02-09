@@ -11,7 +11,7 @@ u8 fov =80;
 	(GX_TRANSFER_FLIP_VERT(0) | GX_TRANSFER_OUT_TILED(0) | GX_TRANSFER_RAW_COPY(0) | \
 	GX_TRANSFER_IN_FORMAT(GX_TRANSFER_FMT_RGBA8) | GX_TRANSFER_OUT_FORMAT(GX_TRANSFER_FMT_RGB8) | \
 	GX_TRANSFER_SCALING(GX_TRANSFER_SCALE_NO))
-headfolders* focus;
+headfolders* focus=NULL;
 
 // typedef struct vertex
 // { 
@@ -53,8 +53,9 @@ void createFolders()
 {
 	//dont put anything in focus initially
 	addfolderhead("first");
-	focus=kinghead;
+	
 	addfolderhead("second");
+	//focus=kinghead->next;
 	addfolder("sup","mombo","second");
 }
 void tapFocus(float x, float y)
@@ -76,6 +77,7 @@ void tapFocus(float x, float y)
 				if ((y<= temp->y )&& (y>=(temp->y-50)))
 				{
 					focus=temp;
+					printf("\x1b[14;0H Focus name is %s", focus->name);
 					return;
 				}
 				
@@ -117,6 +119,8 @@ void setupBuffs()
 }
 void subdisplay(folders* top,s16 i)
 {
+	
+
 	folders* temp = top;
 	if (temp==NULL)
 	{
@@ -129,7 +133,7 @@ void subdisplay(folders* top,s16 i)
 		Mtx_Translate(&MV,-160.0f,-120.0f-y*70.0+i,0.0f,true);
 		// if(temp==focus)
 		// {
-		// 	printf("\x1b[12;0H Focus name is %s", temp->name);
+			//printf("\x1b[14;0H Focus name is %s", temp->name);
 		// }
 		C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_modelview, &MV);
 		C3D_DrawArrays(GPU_TRIANGLES, 0, 6);
@@ -158,24 +162,30 @@ void display(s16 i)
 	}
 	while(temp!=NULL)
 	{
+		if(strcmp(temp->name,"first")!=0)
+		{
+
+		
 		if(temp==focus)
 		{
 			subdisplay(temp->head,i);
 			return;
 		}
+		
+		}
 		temp=temp->next;
 	}
-
+	temp = kinghead;
 	u8 y=0;
 	while(temp!=NULL)
 	{
 
 		Mtx_Identity(&MV);
 		Mtx_Translate(&MV,-160.0f,-120.0f-y*70.0+i,0.0f,true);
-		if(temp==focus)
-		{
-			printf("\x1b[12;0H Focus name is %s", temp->name);
-		}
+		// if(temp==focus)
+		// {
+			// printf("\x1b[12;0H Focus name is %s", temp->name);
+		// }
 		C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_modelview, &MV);
 		C3D_DrawArrays(GPU_TRIANGLES, 0, 6);
 		//x and y from upper left 
