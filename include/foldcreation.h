@@ -17,7 +17,6 @@ struct headfolders
 {
 	float x,y;
 	folders* next; 
-	folders* prev; 
 	char* text; 
 	char* name; 
 };

@@ -1,4 +1,5 @@
 main.o: /home/coiland/Documents/devkitpro/HelpD3sk/source/main.c \
+ /home/coiland/Documents/devkitpro/HelpD3sk/include/setup.h \
  /home/coiland/Documents/devkitpro/HelpD3sk/include/headers.h \
  /opt/devkitpro/libctru/include/3ds.h \
  /opt/devkitpro/libctru/include/3ds/types.h \
@@ -105,7 +106,9 @@ main.o: /home/coiland/Documents/devkitpro/HelpD3sk/source/main.c \
  /opt/devkitpro/libctru/include/c2d/text.h \
  /opt/devkitpro/libctru/include/c2d/font.h \
  /home/coiland/Documents/devkitpro/HelpD3sk/build/vshader_shbin.h \
+ /home/coiland/Documents/devkitpro/HelpD3sk/include/updatestate.h \
  /home/coiland/Documents/devkitpro/HelpD3sk/include/foldcreation.h
+/home/coiland/Documents/devkitpro/HelpD3sk/include/setup.h:
 /home/coiland/Documents/devkitpro/HelpD3sk/include/headers.h:
 /opt/devkitpro/libctru/include/3ds.h:
 /opt/devkitpro/libctru/include/3ds/types.h:
@@ -212,4 +215,5 @@ main.o: /home/coiland/Documents/devkitpro/HelpD3sk/source/main.c \
 /opt/devkitpro/libctru/include/c2d/text.h:
 /opt/devkitpro/libctru/include/c2d/font.h:
 /home/coiland/Documents/devkitpro/HelpD3sk/build/vshader_shbin.h:
+/home/coiland/Documents/devkitpro/HelpD3sk/include/updatestate.h:
 /home/coiland/Documents/devkitpro/HelpD3sk/include/foldcreation.h:

@@ -17,21 +17,10 @@ headfolders* kingtail=NULL;
  * @result              A pointer to new button 
 */
 
- //looks for folder with that name and deletes it 
- void deletefolder(char* headname, char* name )
- { 
+//  void creategraphic(folders* new)
+//  {
 
- }
-
- //
- void createheadgraphic(headfolders* new, headfolders* prev)
- {
-
- }
- void creategraphic(folders* new, folders* prev)
- {
-
- }
+//  }
 void addfolder(char* text,char * name, char* headname) 
  {
     headfolders *temp=kinghead;
@@ -57,7 +46,6 @@ void addfolder(char* text,char * name, char* headname)
     }
     else
     {
-        new->prev = temp->tail;  
         temp->tail=new;
     }
    
