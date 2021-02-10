@@ -1,0 +1,11 @@
+#ifndef SETUP_H
+#define SETUP_H
+
+#include "headers.h"
+void setupBuffs();
+void createFolders();
+void sceneExit();
+extern int uLoc_projection,uLoc_modelview;
+extern C3D_Mtx MV;
+extern C3D_Mtx P;
+#endif

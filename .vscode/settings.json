@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "headers.h": "c",
+        "mainfolder.h": "c",
+        "updatestate.h": "c"
+    }
+}

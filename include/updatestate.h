@@ -1,0 +1,8 @@
+#ifndef UPDATESTATE_H
+#define UPDATESTATE_H
+#include "headers.h"
+#include "foldcreation.h"
+void updateState(u32,touchPosition);
+extern folders *subselect;
+extern headfolders *headselect;
+#endif
