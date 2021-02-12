@@ -71,19 +71,23 @@ void updateState(u32 keys, touchPosition screen)
 
 static void tapFocus(float x, float y)
 {
-	//int i =4;
-	//printf("\x1b[40;0H%03f; %03f", x, y);
-	x=-160+(((x-5)*320)/309) ;
-	y=120-(((y-5)*240)/229) ;
+	int i =4;
+	printf("\x1b[40;0H%03f; %03f", x, y);
+	x=-160+(((x-5)*320)/314) ;
+	y=120-(((y-5)*240)/234) ;
 	if(headselect!=NULL)
 	{
 		folders *temp = mainfocus->head;
 		while(temp!=NULL)
 		{
-			//printf("\x1b[%d;0H%f:%f",i,temp->x,temp->y);
-			if((x>= temp->x )&& (x<=(temp->x+200)))
+			if(i==4)
 			{
-				if ((y<= temp->y )&& (y>=(temp->y-50)))
+				
+			}
+			
+			if((x>= temp->x )&& (x<=(temp->x+270)))
+			{
+				if ((y<= temp->y )&& (y>=(temp->y-45)))
 				{
 					if (temp==subfocus)
 					{
@@ -100,6 +104,7 @@ static void tapFocus(float x, float y)
 				
 			}
 			temp=temp->next;
+			i++;
 			//i+=2;
 		}
 
@@ -111,9 +116,9 @@ static void tapFocus(float x, float y)
 		while(temp!=NULL)
 		{
 			//printf("\x1b[%d;0H%f:%f",i,temp->x,temp->y);
-			if((x>= temp->x )&& (x<=(temp->x+200)))
+			if((x>= temp->x )&& (x<=(temp->x+270)))
 			{
-				if ((y<= temp->y )&& (y>=(temp->y-50)))
+				if ((y<= temp->y )&& (y>=(temp->y-45)))
 				{
 					if(temp==mainfocus)
 					{
@@ -142,7 +147,8 @@ static void display(s16 i)
 
 	
 	//Mtx_Translate(&MV,-160.0f,-120.0f+i,0.0f,true);
-	Mtx_PerspTilt(&P, C3D_AngleFromDegrees(atan2(240,0.1)*360/M_PI), 320/240, 0.1f, 1000.0f,  true);
+	//Mtx_PerspTilt(&P, C3D_AngleFromDegrees(atan2(240,0.1)*360/M_PI), 320/240, 0.1f, 1000.0f,  true);
+	
 	C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_projection, &P);
 
 	if(headselect!=NULL)
