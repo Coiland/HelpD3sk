@@ -5,7 +5,7 @@
 void setupBuffs();
 void createFolders();
 void sceneExit();
-extern int uLoc_projection,uLoc_modelview;
+extern int uLoc_projection,uLoc_modelview,uform_selectset;
 extern C3D_Mtx MV;
 extern C3D_Mtx P;
 #endif

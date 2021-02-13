@@ -5,4 +5,8 @@
 void updateState(u32,touchPosition);
 extern folders *subselect;
 extern headfolders *headselect;
+
+extern folders *subfocus;
+extern headfolders *mainfocus;
+
 #endif

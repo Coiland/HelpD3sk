@@ -4,6 +4,7 @@
 */
 #ifndef FOLDCREATION_H
 #define FOLDCREATION_H
+#include "headers.h"
 typedef struct headfolders headfolders;
 typedef struct folders folders;
 struct headfolders
@@ -13,6 +14,7 @@ struct headfolders
     headfolders* next;
     folders* tail;
     folders* head;
+    u8 count;
 };
  struct folders
 {
@@ -25,4 +27,5 @@ extern headfolders* kinghead;
 extern headfolders* kingtail;
 void addfolderhead(char* );
 void addfolder(char* text,char * name, char* headname);
+extern u8 maincount;
 #endif

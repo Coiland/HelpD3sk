@@ -7,6 +7,7 @@
 
 headfolders* kinghead=NULL; 
 headfolders* kingtail=NULL;
+u8 maincount=0;
 
 /*!
  * @param       name     Name to be displayed on the button
@@ -33,6 +34,7 @@ void addfolder(char* text,char * name, char* headname)
         }  
         
     }
+    (temp->count)++;
     folders* new=(folders*)malloc(sizeof(folders));
     if(new==NULL)
     {
@@ -80,5 +82,6 @@ void addfolder(char* text,char * name, char* headname)
     new->head=NULL;
     new->tail=NULL;
     kingtail=new;
+    maincount++;
  }
  

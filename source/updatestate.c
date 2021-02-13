@@ -2,18 +2,22 @@
 #include "setup.h"
 #include "subfolder.h"
 #include "mainfolder.h"
+#include "foldcreation.h"
 static void tapFocus(float,float);
 static void display(s16);
-static u16 ytemp=0;
-static u16 first=0;
-static u16 hold=0;
+static s16 ytemp=0;
+static s16 first=0;
+static s16 hold=0;
 static u16 penx=0;
 static u16 peny=0;
+static u16 tapx=0;
+static u16 tapy=0;
 static u8 i=0;
 static u8 holdcount=0;
 static u8 tapflag=0;
-static headfolders *mainfocus=NULL;
-static folders *subfocus=NULL;
+static u8 blankcount=0;
+headfolders *mainfocus=NULL;
+folders *subfocus=NULL;
 headfolders *headselect=NULL;
 folders *subselect=NULL;
 
@@ -28,13 +32,15 @@ void updateState(u32 keys, touchPosition screen)
 	}
 	else
 	{
-    	if(i==0&& (screen.py!=0||screen.px!=0))
+		//improve tap and put a slider
+    	if(i==0 && (screen.py!=0||screen.px!=0))
 		{
 			first=screen.py + hold;
 			i=1;
 			holdcount++;
+			blankcount=0;
 		}
-		else if (i==1 && (abs(screen.py-peny)<6)&& (abs(screen.px-penx)<6))
+		else if (i==1 && ((abs(screen.py-peny))<5)&& ((abs(screen.px-penx))<5))
 		{
 			holdcount++;
 		}
@@ -45,23 +51,66 @@ void updateState(u32 keys, touchPosition screen)
 			ytemp=hold;
 			if(i==1)
 			{
-				if(holdcount<20)
+				if(holdcount<5 )
 				{
 					tapflag=1;
+					tapx=penx;
+					tapy=peny;
 				}
-			holdcount =0;
 			}
+			holdcount =0;
 			i=0;
+			blankcount++;
 		}
 
-		if(tapflag==1)
+		if(tapflag==1 && blankcount>20)
 		{
-			tapFocus(penx,peny);
+			tapFocus(tapx,tapy);
 			tapflag=0;
+			blankcount=0;
+			holdcount =0;
 		}
-        hold=ytemp;
+        
 		penx=screen.px;
 		peny=screen.py;
+		
+		if((-120.0+ytemp+236)<116)
+		{
+			ytemp=0;
+		}
+		else if (headselect!=NULL)
+		{
+			if((-120.0-((headselect->count)-1)*55.0+236)<-71)
+			{
+
+				if((-120.0+ytemp-((headselect->count)-1)*55.0+236)>-71)
+				{
+					ytemp= -187 + ((headselect->count)-1)*55.0;
+				}
+			}
+			else
+			{
+				ytemp=0;
+			}
+		}
+		else if (headselect==NULL)
+		{
+			if((-120.0-(maincount-1)*55.0+236)<-71)
+			{
+				printf("this is man count %d",maincount);
+				if((-120.0+ytemp-(maincount-1)*55.0+236)>-71)
+				{
+					ytemp= -187 + (maincount-1)*55.0;
+				}
+			}
+			else
+			{
+				ytemp=0;
+			}
+		}
+		
+		hold=ytemp;
+		//printf("this is : %d", ytemp);
         display(ytemp);
 	}
 
@@ -149,7 +198,7 @@ static void display(s16 i)
 	//Mtx_Translate(&MV,-160.0f,-120.0f+i,0.0f,true);
 	//Mtx_PerspTilt(&P, C3D_AngleFromDegrees(atan2(240,0.1)*360/M_PI), 320/240, 0.1f, 1000.0f,  true);
 	
-	C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_projection, &P);
+	
 
 	if(headselect!=NULL)
 	{
