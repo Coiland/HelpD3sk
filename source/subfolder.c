@@ -45,6 +45,7 @@ void subDisplay(folders* top,s16 i)
 
 		}
 		C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_modelview, &MV);
+		C3D_SetBufInfo(&bufInfo);
 		C3D_DrawArrays(GPU_TRIANGLES, 0, 54);
 		//x and y from upper left 
 		temp->x= -120;

@@ -102,6 +102,48 @@ static const vertex vertex_list[] =
 { {35.0f, 231.0f,0.1f},{0.9f,0.0f,0.9f} },
 
 };
+static const vertex table_list[] =
+{
+	//top 2
+// 	{ {35.0f, 191.0f, 0.1f},{0.9f,0.0f,0.1f} },
+// { {295.0f, 191.0f, 0.1f},{0.7f,0.0f,0.1f}}, 
+// { {35.0f, 236.0f, 0.1f },{0.9f,0.0f,1.0f}},
+// { {295.0f, 236.0f, 0.1f},{0.7f,0.0f,1.0f} },
+// { {35.0f, 236.0f, 0.1f },{0.9f,0.0f,1.0f}},
+// { {295.0f, 191.0f, 0.1f},{0.7f,0.0f,0.1f} },
+	{ {40.0f, 221.0f,0.05f},{0.0f,0.0f,0.0f}},
+	{ {80.0f, 226.0f,0.05f},{0.0f,0.0f,0.0f}},
+	{ {40.0f, 226.0f,0.05f},{0.0f,0.0f,0.0f}},
+
+	{ {40.0f, 221.0f,0.05f},{0.0f,0.0f,0.0f}},
+	{ {80.0f, 221.0f,0.05f},{0.0f,0.0f,0.0f}},
+	{ {80.0f, 226.0f,0.05f},{0.0f,0.0f,0.0f}},
+	
+
+
+	//left bottom
+	{ {53.0f, 221.0f,0.05f},{0.0f,0.0f,0.0f}},
+	{ {48.0f,221.0f,0.05f},{0.0f,0.0f,0.0f}},
+	{ {48.0f, 201.0f,0.05f},{0.0f,0.0f,0.0f}},
+
+	{ {48.0f,  201.0f,0.05f},{0.0f,0.0f,0.0f}},
+	{ {53.0f,  201.0f,0.05f},{0.0f,0.0f,0.0f}},
+	{ {53.0f,  221.0f,0.05f},{0.0f,0.0f,0.0f}},
+	
+
+	//right bottom
+	{ {72.0f, 201.0f,0.05f},{0.0f,0.0f,0.0f}},
+	{ {72.0f, 221.0f,0.05f},{0.0f,0.0f,0.0f}},
+	{ {67.0f, 221.0f,0.05f},{0.0f,0.0f,0.0f}},
+
+	
+	{ {67.0f, 221.0f,0.05f},{0.0f,0.0f,0.0f}},
+	{ {67.0f, 201.0f,0.05f},{0.0f,0.0f,0.0f}},
+	{ {72.0f,  201.0f,0.05f},{0.0f,0.0f,0.0f}},
+	
+	
+	
+};
 
 // static const C3D_Mtx light[] =
 // {
@@ -114,8 +156,9 @@ static shaderProgram_s program;
 int uLoc_projection,uLoc_modelview,uform_selectset,uform_light;
 C3D_Mtx MV;
 C3D_Mtx P;
-
+C3D_BufInfo bufInfo,tableInfo;
 static void* BUFFER_DATA;
+static void* TABLE_DATA;
 void createFolders()
 {
 	//dont put anything in focus initially
@@ -157,14 +200,23 @@ void setupBuffs()
 
 	Mtx_OrthoTilt(&P, -160.0, 160.0, -120.0, 120.0, 0.0, 1.0, true);
 	C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_projection, &P);
-	//C3D_FVUnifMtxNx4(GPU_VERTEX_SHADER, uform_light,&light,1);
+
+
 	C3D_FVUnifSet(GPU_VERTEX_SHADER, uform_light, 0.5f, 0.5f,  0.5f, 1.0f);
+
+	TABLE_DATA = linearAlloc(sizeof(table_list));
+	memcpy(TABLE_DATA , table_list, sizeof(table_list));
+
+	BufInfo_Init(&tableInfo);
+	BufInfo_Add(&tableInfo, TABLE_DATA , sizeof(vertex), 2, 0x10);
+
 	BUFFER_DATA = linearAlloc(sizeof(vertex_list));
 	memcpy(BUFFER_DATA , vertex_list, sizeof(vertex_list));
 
-	C3D_BufInfo* bufInfo = C3D_GetBufInfo();
-	BufInfo_Init(bufInfo);
-	BufInfo_Add(bufInfo, BUFFER_DATA , sizeof(vertex), 2, 0x10);
+	BufInfo_Init(&bufInfo);
+	BufInfo_Add(&bufInfo, BUFFER_DATA , sizeof(vertex), 2, 0x10);
+
+	//table  vbo
 
 }
 
@@ -172,6 +224,7 @@ void sceneExit()
 {
 	//freeing buffer
 	linearFree(BUFFER_DATA);
+	linearFree(TABLE_DATA);
 	//freeing shader
 	shaderProgramFree(&program);
 	DVLB_Free(vshader_dvlb);

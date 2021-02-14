@@ -32,45 +32,39 @@ void updateState(u32 keys, touchPosition screen)
 	}
 	else
 	{
-		//improve tap and put a slider
+
     	if(i==0 && (screen.py!=0||screen.px!=0))
 		{
 			first=screen.py + hold;
 			i=1;
 			holdcount++;
-			blankcount=0;
+			tapx=screen.px;
+			tapy=screen.py;
 		}
-		else if (i==1 && ((abs(screen.py-peny))<5)&& ((abs(screen.px-penx))<5))
+		else if (i==1 && ((abs(screen.py-tapy))<5)&& ((abs(screen.px-tapx))<5))
 		{
 			holdcount++;
 		}
+		else if (screen.py!=0 || screen.px!=0)
+		{
+			holdcount=0;
+		}
 		ytemp=-screen.py+first;
-		// && screen.py==0 && screen.px==0
+
 		if(screen.py==0 && screen.px==0)
 		{
 			ytemp=hold;
 			if(i==1)
 			{
-				if(holdcount<5 )
+				if(holdcount<20 && holdcount>0)
 				{
-					tapflag=1;
-					tapx=penx;
-					tapy=peny;
+					tapFocus(penx,peny);
 				}
 			}
 			holdcount =0;
 			i=0;
-			blankcount++;
 		}
 
-		if(tapflag==1 && blankcount>20)
-		{
-			tapFocus(tapx,tapy);
-			tapflag=0;
-			blankcount=0;
-			holdcount =0;
-		}
-        
 		penx=screen.px;
 		peny=screen.py;
 		
@@ -97,7 +91,7 @@ void updateState(u32 keys, touchPosition screen)
 		{
 			if((-120.0-(maincount-1)*55.0+236)<-71)
 			{
-				printf("this is man count %d",maincount);
+				//printf("this is man count %d",maincount);
 				if((-120.0+ytemp-(maincount-1)*55.0+236)>-71)
 				{
 					ytemp= -187 + (maincount-1)*55.0;
