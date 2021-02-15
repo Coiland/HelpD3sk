@@ -53,5 +53,20 @@ void subDisplay(folders* top,s16 i)
 		temp=temp->next;
 		y++;
 	}
+	float t;
+	if(subtranslate==0)
+	{
+		t=0;
+	}
+	else
+	{
+		t=i/(subtranslate);
+	}
+	Mtx_Identity(&MV);
+	Mtx_Translate(&MV,-160.0f,-120.0 -t*180.0f,0.0f,true);
+	C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_modelview, &MV);
+	C3D_FVUnifSet(GPU_VERTEX_SHADER, uform_selectset, 0.0f, 0.0f,  0.0f, 0.0f);
+	C3D_SetBufInfo(&tableInfo);
+	C3D_DrawArrays(GPU_TRIANGLES, 0, 12);
 
 }

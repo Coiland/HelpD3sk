@@ -8,5 +8,6 @@ extern headfolders *headselect;
 
 extern folders *subfocus;
 extern headfolders *mainfocus;
+extern float subtranslate,maxtranslate;
 
 #endif

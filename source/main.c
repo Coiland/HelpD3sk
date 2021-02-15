@@ -25,9 +25,8 @@ int main(int argc, char* argv[])
 	C3D_RenderTarget* bottom = C3D_RenderTargetCreate(240, 320, GPU_RB_RGBA8, GPU_RB_DEPTH24_STENCIL8);
 	C3D_RenderTargetSetOutput(bottom, GFX_BOTTOM, GFX_LEFT, DISPLAY_TRANSFER_FLAGS);
 
-	
-	setupBuffs();
 	createFolders();
+	setupBuffs();
 	int z =0;
 	while (aptMainLoop())
 	{

@@ -20,9 +20,13 @@ headfolders *mainfocus=NULL;
 folders *subfocus=NULL;
 headfolders *headselect=NULL;
 folders *subselect=NULL;
+float maxtranslate =0;
+float subtranslate =0;
 
 void updateState(u32 keys, touchPosition screen)
 {
+	
+	
 	if(keys & KEY_B)
 	{
 		mainfocus=NULL;
@@ -74,12 +78,14 @@ void updateState(u32 keys, touchPosition screen)
 		}
 		else if (headselect!=NULL)
 		{
+			
 			if((-120.0-((headselect->count)-1)*55.0+236)<-71)
 			{
+				subtranslate=-187 + ((headselect->count)-1)*55.0;
 
 				if((-120.0+ytemp-((headselect->count)-1)*55.0+236)>-71)
 				{
-					ytemp= -187 + ((headselect->count)-1)*55.0;
+					ytemp= subtranslate;
 				}
 			}
 			else
@@ -89,12 +95,14 @@ void updateState(u32 keys, touchPosition screen)
 		}
 		else if (headselect==NULL)
 		{
+			
 			if((-120.0-(maincount-1)*55.0+236)<-71)
 			{
+				maxtranslate =-187 + (maincount-1)*55.0;
 				//printf("this is man count %d",maincount);
 				if((-120.0+ytemp-(maincount-1)*55.0+236)>-71)
 				{
-					ytemp= -187 + (maincount-1)*55.0;
+					ytemp= maxtranslate;
 				}
 			}
 			else
