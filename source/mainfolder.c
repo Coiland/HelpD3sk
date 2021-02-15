@@ -47,7 +47,7 @@ void mainDisplay(s16 i)
 		t=i/(maxtranslate);
 	}
 	Mtx_Identity(&MV);
-	Mtx_Translate(&MV,-160.0f,-120.0 -t*180.0f,0.0f,true);
+	Mtx_Translate(&MV,-160.0f,-120.0 -t*150.0f,0.0f,true);
 	C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_modelview, &MV);
 	C3D_FVUnifSet(GPU_VERTEX_SHADER, uform_selectset, 0.0f, 0.0f,  0.0f, 0.0f);
 	C3D_SetBufInfo(&tableInfo);
