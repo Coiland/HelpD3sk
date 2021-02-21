@@ -8,16 +8,9 @@ typedef struct {
 	float position[3];
 	float colour[3];
  } vertex;
-static const vertex vertex_list[] =
+static const vertex main_button[] =
 {
-	
-	// { {80.0f, 40.0f, -400.0f} },
-	// { {280.0f, 40.0f, -400.0f} },
-	// { {80.0f, 140.0f, -400.0f }},
-		
-	// { {280.0f, 140.0f, -400.0f} },
-	// { {80.0f, 140.0f, -400.0f }},
-	// { {280.0f, 40.0f, -400.0f} },
+
 //--------------main rectangle two triangles--------------
 	{ {35.0f, 191.0f, 0.1f},{0.9f,0.0f,0.1f} },
 	{ {295.0f, 191.0f, 0.1f},{0.7f,0.0f,0.1f}}, 
@@ -109,8 +102,6 @@ static const vertex vertex_list[] =
 	{ {80.0f, 221.0f,0.05f},{0.0f,0.0f,0.0f}},
 	{ {80.0f, 226.0f,0.05f},{0.0f,0.0f,0.0f}},
 	
-
-
 	//left bottom
 	{ {53.0f, 221.0f,0.05f},{0.0f,0.0f,0.0f}},
 	{ {48.0f,221.0f,0.05f},{0.0f,0.0f,0.0f}},
@@ -130,139 +121,49 @@ static const vertex vertex_list[] =
 	{ {67.0f, 221.0f,0.05f},{0.0f,0.0f,0.0f}},
 	{ {67.0f, 201.0f,0.05f},{0.0f,0.0f,0.0f}},
 	{ {72.0f,  201.0f,0.05f},{0.0f,0.0f,0.0f}},
-	
-
-
 };
-static const vertex table_list[] =
+
+static const vertex slider[] =
 {
-	//top 2
-// 	{ {35.0f, 191.0f, 0.1f},{0.9f,0.0f,0.1f} },
-// { {295.0f, 191.0f, 0.1f},{0.7f,0.0f,0.1f}}, 
-// { {35.0f, 236.0f, 0.1f },{0.9f,0.0f,1.0f}},
-// { {295.0f, 236.0f, 0.1f},{0.7f,0.0f,1.0f} },
-// { {35.0f, 236.0f, 0.1f },{0.9f,0.0f,1.0f}},
-// { {295.0f, 191.0f, 0.1f},{0.7f,0.0f,0.1f} },
-	// { {40.0f, 221.0f,0.05f},{0.0f,0.0f,0.0f}},
-	// { {80.0f, 226.0f,0.05f},{0.0f,0.0f,0.0f}},
-	// { {40.0f, 226.0f,0.05f},{0.0f,0.0f,0.0f}},
-
-	// { {40.0f, 221.0f,0.05f},{0.0f,0.0f,0.0f}},
-	// { {80.0f, 221.0f,0.05f},{0.0f,0.0f,0.0f}},
-	// { {80.0f, 226.0f,0.05f},{0.0f,0.0f,0.0f}},
 	
 
+	{ {17.0f, 209.0f,0.05f},{0.2f,0.0f,0.9f}},
+	{ {17.0f,179.0f,0.05f},{0.2f,0.0f,0.9f}},
+	{ {23.0f, 179.0f,0.05f},{0.2f,0.0f,0.9f}},
 
-	// //left bottom
-	// { {53.0f, 221.0f,0.05f},{0.0f,0.0f,0.0f}},
-	// { {48.0f,221.0f,0.05f},{0.0f,0.0f,0.0f}},
-	// { {48.0f, 201.0f,0.05f},{0.0f,0.0f,0.0f}},
-
-	// { {48.0f,  201.0f,0.05f},{0.0f,0.0f,0.0f}},
-	// { {53.0f,  201.0f,0.05f},{0.0f,0.0f,0.0f}},
-	// { {53.0f,  221.0f,0.05f},{0.0f,0.0f,0.0f}},
+	{ {23.0f,  209.0f,0.05f},{0.2f,0.0f,0.9f}},
+	{ {17.0f,209.0f,0.05f},{0.2f,0.0f,0.9f}},
+	{ {23.0f, 179.0f,0.05f},{0.2f,0.0f,0.9f}},
 	
-
-	// //right bottom
-	// { {72.0f, 201.0f,0.05f},{0.0f,0.0f,0.0f}},
-	// { {72.0f, 221.0f,0.05f},{0.0f,0.0f,0.0f}},
-	// { {67.0f, 221.0f,0.05f},{0.0f,0.0f,0.0f}},
-
+	{ {17.0f,209.0f,0.05f},{0.2f,0.0f,0.9f}},
+	{ {23.0f, 209.0f,0.05f},{0.2f,0.0f,0.9f}},
+	{ {17.0f,219.0f,0.05f},{0.2f,0.0f,0.9f}},
 	
-	// { {67.0f, 221.0f,0.05f},{0.0f,0.0f,0.0f}},
-	// { {67.0f, 201.0f,0.05f},{0.0f,0.0f,0.0f}},
-	// { {72.0f,  201.0f,0.05f},{0.0f,0.0f,0.0f}},
-
-
-	{ {17.0f, 209.0f,0.05f},{0.4f,0.0f,0.5f}},
-	{ {17.0f,179.0f,0.05f},{0.4f,0.0f,0.5f}},
-	{ {23.0f, 179.0f,0.05f},{0.4f,0.0f,0.5f}},
-
-	{ {23.0f,  209.0f,0.05f},{0.4f,0.0f,0.5f}},
-	{ {17.0f,209.0f,0.05f},{0.4f,0.0f,0.5f}},
-	{ {23.0f, 179.0f,0.05f},{0.4f,0.0f,0.5f}},
-	
-
-	//right bottom
-	
-	{ {17.0f,209.0f,0.05f},{0.4f,0.0f,0.5f}},
-	{ {23.0f, 209.0f,0.05f},{0.4f,0.0f,0.5f}},
-	{ {17.0f,219.0f,0.05f},{0.4f,0.0f,0.5f}},
-
-
-
-	
-	{ {17.0f, 169.0f,0.05f},{0.4f,0.0f,0.5f}},
-	{ {23.0f, 179.0f,0.05f},{0.4f,0.0f,0.5f}},
-	{ {17.0f,179.0f,0.05f},{0.4f,0.0f,0.5f}},
-
-	
+	{ {17.0f, 169.0f,0.05f},{0.2f,0.0f,0.9f}},
+	{ {23.0f, 179.0f,0.05f},{0.2f,0.0f,0.9f}},
+	{ {17.0f,179.0f,0.05f},{0.2f,0.0f,0.9f}},
 };
 static const vertex sliderlimits[] =
 {
 	//-------------slider limits------------------------
-	{{23.0f,209.0f,0.1f},{0.67f,0.67f,0.85f}},
-	{{17.0f,209.0f,0.1f},{0.67f,0.67f,0.85f}},
-	{{23.0f,29.0f,0.1f},{0.67f,0.67f,0.85f}},
+	{{23.0f,209.0f,0.1f},{0.5f,0.67f,0.85f}},
+	{{17.0f,209.0f,0.1f},{0.5f,0.67f,0.85f}},
+	{{23.0f,29.0f,0.1f},{0.5f,0.67f,0.85f}},
 
-	{{17.0f,209.0f,0.1f},{0.67f,0.67f,0.85f}},
-	{{17.0f,29.0f,0.1f},{0.67f,0.67f,0.85f}},
-	{{23.0f,29.0f,0.1f},{0.67f,0.67f,0.85f}},
+	{{17.0f,209.0f,0.1f},{0.5f,0.67f,0.85f}},
+	{{17.0f,29.0f,0.1f},{0.5f,0.67f,0.85f}},
+	{{23.0f,29.0f,0.1f},{0.5f,0.67f,0.85f}},
+
+	{{17.0f,209.0f,0.1f},{0.5f,0.67f,0.85f}},
+	{{23.0f,209.0f,0.1f},{0.5f,0.67f,0.85f}},
+	{{17.0f,219.0f,0.1f},{0.5f,0.67f,0.85f}},
 	
-
-
-	{{17.0f,209.0f,0.1f},{0.67f,0.67f,0.85f}},
-	{{23.0f,209.0f,0.1f},{0.67f,0.67f,0.85f}},
-	{{17.0f,219.0f,0.1f},{0.67f,0.67f,0.85f}},
-	
-	{{23.0f,29.0f,0.1f},{0.67f,0.67f,0.85f}},
-	{{17.0f,29.0f,0.1f},{0.67f,0.67f,0.85f}},
-	{{17.0f,19.0f,0.1f},{0.67f,0.67f,0.85f}},
-// 	//top 2
-// // 	{ {35.0f, 191.0f, 0.1f},{0.9f,0.0f,0.1f} },
-// // { {295.0f, 191.0f, 0.1f},{0.7f,0.0f,0.1f}}, 
-// // { {35.0f, 236.0f, 0.1f },{0.9f,0.0f,1.0f}},
-// // { {295.0f, 236.0f, 0.1f},{0.7f,0.0f,1.0f} },
-// // { {35.0f, 236.0f, 0.1f },{0.9f,0.0f,1.0f}},
-// // { {295.0f, 191.0f, 0.1f},{0.7f,0.0f,0.1f} },
-// 	{ {40.0f, 221.0f,0.05f},{0.0f,0.0f,0.0f}},
-// 	{ {80.0f, 226.0f,0.05f},{0.0f,0.0f,0.0f}},
-// 	{ {40.0f, 226.0f,0.05f},{0.0f,0.0f,0.0f}},
-
-// 	{ {40.0f, 221.0f,0.05f},{0.0f,0.0f,0.0f}},
-// 	{ {80.0f, 221.0f,0.05f},{0.0f,0.0f,0.0f}},
-// 	{ {80.0f, 226.0f,0.05f},{0.0f,0.0f,0.0f}},
-	
-
-
-// 	//left bottom
-// 	{ {53.0f, 221.0f,0.05f},{0.0f,0.0f,0.0f}},
-// 	{ {48.0f,221.0f,0.05f},{0.0f,0.0f,0.0f}},
-// 	{ {48.0f, 201.0f,0.05f},{0.0f,0.0f,0.0f}},
-
-// 	{ {48.0f,  201.0f,0.05f},{0.0f,0.0f,0.0f}},
-// 	{ {53.0f,  201.0f,0.05f},{0.0f,0.0f,0.0f}},
-// 	{ {53.0f,  221.0f,0.05f},{0.0f,0.0f,0.0f}},
-	
-
-// 	//right bottom
-// 	{ {72.0f, 201.0f,0.05f},{0.0f,0.0f,0.0f}},
-// 	{ {72.0f, 221.0f,0.05f},{0.0f,0.0f,0.0f}},
-// 	{ {67.0f, 221.0f,0.05f},{0.0f,0.0f,0.0f}},
-
-	
-// 	{ {67.0f, 221.0f,0.05f},{0.0f,0.0f,0.0f}},
-// 	{ {67.0f, 201.0f,0.05f},{0.0f,0.0f,0.0f}},
-// 	{ {72.0f,  201.0f,0.05f},{0.0f,0.0f,0.0f}},
-	
-	
-	
+	{{23.0f,29.0f,0.1f},{0.5f,0.67f,0.85f}},
+	{{17.0f,29.0f,0.1f},{0.5f,0.67f,0.85f}},
+	{{17.0f,19.0f,0.1f},{0.5f,0.67f,0.85f}},	
 };
 
-// static const C3D_Mtx light[] =
-// {
-// 	{0.5f,0.5f,0.5f,1.0f}
-// };
+
 #define vertex_list_count (sizeof(vertex_list)/sizeof(vertex_list[0]))
 
 static DVLB_s* vshader_dvlb;
@@ -270,9 +171,9 @@ static shaderProgram_s program;
 int uLoc_projection,uLoc_modelview,uform_selectset,uform_light;
 C3D_Mtx MV;
 C3D_Mtx P;
-C3D_BufInfo bufInfo,tableInfo,limitInfo;
-static void* BUFFER_DATA;
-static void* TABLE_DATA;
+C3D_BufInfo buttonInfo,sliderInfo,limitInfo;
+static void* BUTTON_DATA;
+static void* SLIDER_DATA;
 static void* LIMIT_DATA;
 void createFolders()
 {
@@ -294,6 +195,7 @@ void createFolders()
 	addfolder("hey","mom","second");
 	addfolder("hey","mom","second");
 	addfolder("hey","mom","second");
+	addfolder("hey","mom","third");
 
 }
 void setupBuffs()
@@ -316,13 +218,12 @@ void setupBuffs()
 	Mtx_OrthoTilt(&P, -160.0, 160.0, -120.0, 120.0, 0.0, 1.0, true);
 	C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_projection, &P);
 
+	
+	SLIDER_DATA = linearAlloc(sizeof(slider));
+	memcpy(SLIDER_DATA , slider, sizeof(slider));
 
-
-	TABLE_DATA = linearAlloc(sizeof(table_list));
-	memcpy(TABLE_DATA , table_list, sizeof(table_list));
-
-	BufInfo_Init(&tableInfo);
-	BufInfo_Add(&tableInfo, TABLE_DATA , sizeof(vertex), 2, 0x10);
+	BufInfo_Init(&sliderInfo);
+	BufInfo_Add(&sliderInfo, SLIDER_DATA , sizeof(vertex), 2, 0x10);
 
 	LIMIT_DATA = linearAlloc(sizeof(sliderlimits));
 	memcpy(LIMIT_DATA , sliderlimits, sizeof(sliderlimits));
@@ -330,11 +231,11 @@ void setupBuffs()
 	BufInfo_Init(&limitInfo);
 	BufInfo_Add(&limitInfo, LIMIT_DATA , sizeof(vertex), 2, 0x10);
 
-	BUFFER_DATA = linearAlloc(sizeof(vertex_list));
-	memcpy(BUFFER_DATA , vertex_list, sizeof(vertex_list));
+	BUTTON_DATA = linearAlloc(sizeof(main_button));
+	memcpy(BUTTON_DATA , main_button, sizeof(main_button));
 
-	BufInfo_Init(&bufInfo);
-	BufInfo_Add(&bufInfo, BUFFER_DATA , sizeof(vertex), 2, 0x10);
+	BufInfo_Init(&buttonInfo);
+	BufInfo_Add(&buttonInfo, BUTTON_DATA , sizeof(vertex), 2, 0x10);
 
 	//table  vbo
 
@@ -343,8 +244,8 @@ void setupBuffs()
 void sceneExit()
 {
 	//freeing buffer
-	linearFree(BUFFER_DATA);
-	linearFree(TABLE_DATA);
+	linearFree(BUTTON_DATA);
+	linearFree(SLIDER_DATA);
 	//freeing shader
 	shaderProgramFree(&program);
 	DVLB_Free(vshader_dvlb);

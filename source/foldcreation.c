@@ -31,8 +31,7 @@ void addfolder(char* text,char * name, char* headname)
         if(temp==NULL)
         {
             return;
-        }  
-        
+        }   
     }
     (temp->count)++;
     folders* new=(folders*)malloc(sizeof(folders));
@@ -54,8 +53,7 @@ void addfolder(char* text,char * name, char* headname)
     // printf("\x1b[14;0H Focus name is %s", new->name);
     new->next=NULL;
     new->text=text;
-     
-    
+
  }
 
  void addfolderhead(char* name)

@@ -14,8 +14,6 @@ static u16 tapx=0;
 static u16 tapy=0;
 static u8 i=0;
 static u8 holdcount=0;
-static u8 tapflag=0;
-static u8 blankcount=0;
 headfolders *mainfocus=NULL;
 folders *subfocus=NULL;
 headfolders *headselect=NULL;
@@ -27,17 +25,19 @@ void updateState(u32 keys, touchPosition screen)
 {
 	
 	
+
 	if(keys & KEY_B)
-	{
+		{
 		mainfocus=NULL;
 		subfocus=NULL;
 		headselect=NULL;
 		subselect=NULL;
-	}
+		ytemp=0;
+		}
 	else
 	{
 
-    	if(i==0 && (screen.py!=0||screen.px!=0))
+		if(i==0 && (screen.py!=0||screen.px!=0))
 		{
 			first=screen.py + hold;
 			i=1;
@@ -78,7 +78,6 @@ void updateState(u32 keys, touchPosition screen)
 		}
 		else if (headselect!=NULL)
 		{
-			
 			if((-120.0-((headselect->count)-1)*55.0+236)<-71)
 			{
 				subtranslate=-187 + ((headselect->count)-1)*55.0;
@@ -111,13 +110,16 @@ void updateState(u32 keys, touchPosition screen)
 			}
 		}
 		
-		hold=ytemp;
+		
 		//printf("this is : %d", ytemp);
-        display(ytemp);
 	}
+		hold=ytemp;
+        display(ytemp);
+
+}
 
 		
-}
+
 
 
 static void tapFocus(float x, float y)
@@ -174,6 +176,7 @@ static void tapFocus(float x, float y)
 					if(temp==mainfocus)
 					{
 						headselect=mainfocus;
+						ytemp=0;
 					}
 					else
 					{
@@ -188,27 +191,46 @@ static void tapFocus(float x, float y)
 			temp=temp->next;
 			//i+=2;
 		}
-
 	}
-	
 }
 
 static void display(s16 i)
 {
 
-	
-	//Mtx_Translate(&MV,-160.0f,-120.0f+i,0.0f,true);
-	//Mtx_PerspTilt(&P, C3D_AngleFromDegrees(atan2(240,0.1)*360/M_PI), 320/240, 0.1f, 1000.0f,  true);
-	
-	
-
 	if(headselect!=NULL)
 	{
+		C3D_FVUnifSet(GPU_VERTEX_SHADER, uform_light, 0.0f, 0.5f,  0.0f, 1.0f);
 		subDisplay(mainfocus->head,i);
 	}
 	else
 	{
+		C3D_FVUnifSet(GPU_VERTEX_SHADER, uform_light, 0.2f, 0.0f,  0.9f, 1.0f);
 		mainDisplay(i);
 	}
    
+}
+
+void sliderout(s16 i)
+{
+	float t;
+	if(maxtranslate==0)
+	{
+		t=0;
+	}
+	else
+	{
+		t=i/(maxtranslate);
+	}
+	C3D_SetBufInfo(&sliderInfo);
+	Mtx_Identity(&MV);
+	Mtx_Translate(&MV,-160.0f,-120.0f -t*150.0f,0.0f,true);
+	C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_modelview, &MV);
+	C3D_FVUnifSet(GPU_VERTEX_SHADER, uform_selectset, 0.0f, 0.0f,  0.0f, 0.0f);
+
+	C3D_DrawArrays(GPU_TRIANGLES, 0, 12);
+	C3D_SetBufInfo(&limitInfo);
+	Mtx_Identity(&MV);
+	Mtx_Translate(&MV,-160.0f,-120.0f ,0.0f,true);
+	C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_modelview, &MV);
+	C3D_DrawArrays(GPU_TRIANGLES, 0, 12);	
 }
