@@ -17,7 +17,6 @@ static u8 holdcount=0;
 headfolders *mainfocus=NULL;
 folders *subfocus=NULL;
 headfolders *headselect=NULL;
-folders *subselect=NULL;
 float maxtranslate =0;
 float subtranslate =0;
 
@@ -31,7 +30,6 @@ void updateState(u32 keys, touchPosition screen)
 		mainfocus=NULL;
 		subfocus=NULL;
 		headselect=NULL;
-		subselect=NULL;
 		ytemp=0;
 		}
 	else
@@ -142,14 +140,9 @@ static void tapFocus(float x, float y)
 			{
 				if ((y<= temp->y )&& (y>=(temp->y-45)))
 				{
-					if (temp==subfocus)
-					{
-						subselect=subfocus;
-					}
-					else
-					{
-						subfocus=temp;
-					}
+				
+					subfocus=temp;
+					
 					
 					printf("\x1b[14;0H Focus name is %s", subfocus->name);
 					return;

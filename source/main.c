@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
 	
 	touchPosition screen; 
 
-
+	
 
 	//consoleInit(GFX_TOP, NULL);
 	C3D_RenderTarget* top = C3D_RenderTargetCreate(240, 400, GPU_RB_RGBA8, GPU_RB_DEPTH24_STENCIL8);
