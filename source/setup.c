@@ -10,10 +10,11 @@ static shaderProgram_s program;
 int uLoc_projection,uLoc_modelview,uform_selectset,uform_light;
 C3D_Mtx MV;
 C3D_Mtx P;
-C3D_BufInfo buttonInfo,sliderInfo,limitInfo;
+C3D_BufInfo buttonInfo,sliderInfo,limitInfo,backInfo;
 static void* BUTTON_DATA;
 static void* SLIDER_DATA;
 static void* LIMIT_DATA;
+static void* TABLEBACK_DATA;
 void createFolders()
 {
 	//dont put anything in focus initially
@@ -60,22 +61,24 @@ void setupBuffs()
 
 	SLIDER_DATA = linearAlloc(bslider_size);
 	memcpy(SLIDER_DATA , sliderref, bslider_size);
-
-
 	BufInfo_Init(&sliderInfo);
 	BufInfo_Add(&sliderInfo, SLIDER_DATA , sizeof(vertex), 2, 0x10);
 
 	LIMIT_DATA = linearAlloc(bslider_size);
 	memcpy(LIMIT_DATA , sliderlimitsref, bslider_size);
-
 	BufInfo_Init(&limitInfo);
 	BufInfo_Add(&limitInfo, LIMIT_DATA , sizeof(vertex), 2, 0x10);
 
 	BUTTON_DATA = linearAlloc(button_size);
 	memcpy(BUTTON_DATA , mainbuttref, button_size);
-
 	BufInfo_Init(&buttonInfo);
 	BufInfo_Add(&buttonInfo, BUTTON_DATA , sizeof(vertex), 2, 0x10);
+
+	TABLEBACK_DATA = linearAlloc(tableback_size);
+	memcpy(TABLEBACK_DATA , tableback, tableback_size);
+	BufInfo_Init(&backInfo);
+	BufInfo_Add(&backInfo, TABLEBACK_DATA , sizeof(vertex), 2, 0x10);
+
 
 	//table  vbo
 

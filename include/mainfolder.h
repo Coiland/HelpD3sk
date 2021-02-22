@@ -1,3 +1,7 @@
+
+/*
+--------Author: Insteadof2--------
+*/
 #ifndef MAINFOLDER_H
 #define MAINFOLDER_H
 #include "foldcreation.h"

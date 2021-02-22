@@ -1,3 +1,7 @@
+/*
+--------Author: Insteadof2--------
+*/
+
 #ifndef UPDATESTATE_H
 #define UPDATESTATE_H
 #include "headers.h"

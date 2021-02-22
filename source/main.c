@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
 
 	createFolders();
 	setupBuffs();
-	int z =0;
+
 	while (aptMainLoop())
 	{
 		
