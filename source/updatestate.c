@@ -214,16 +214,31 @@ void sliderout(s16 i)
 	{
 		t=i/(maxtranslate);
 	}
-	C3D_SetBufInfo(&sliderInfo);
+	setBuffs(&sliderInfo,&attrInfo,1);
 	Mtx_Identity(&MV);
 	Mtx_Translate(&MV,-160.0f,-120.0f -t*150.0f,0.0f,true);
 	C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_modelview, &MV);
 	C3D_FVUnifSet(GPU_VERTEX_SHADER, uform_selectset, 0.0f, 0.0f,  0.0f, 0.0f);
-
 	C3D_DrawArrays(GPU_TRIANGLES, 0, 12);
-	C3D_SetBufInfo(&limitInfo);
+	
+	setBuffs(&limitInfo,&attrInfo,1);
 	Mtx_Identity(&MV);
 	Mtx_Translate(&MV,-160.0f,-120.0f ,0.0f,true);
 	C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_modelview, &MV);
 	C3D_DrawArrays(GPU_TRIANGLES, 0, 12);	
+}
+void setBuffs(C3D_BufInfo* vbo,C3D_AttrInfo* attributes, u8 projflag)
+{
+	C3D_BindProgram(&program);
+	C3D_SetAttrInfo(attributes);
+	C3D_SetBufInfo(vbo);
+	if (projflag)
+	{
+		Mtx_OrthoTilt(&P, -160.0, 160.0, -120.0, 120.0, 0.0, 1.0, true);
+	}
+	else
+	{
+
+	}
+	C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_projection, &P);
 }

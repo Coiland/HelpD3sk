@@ -8,6 +8,8 @@
 #include "foldcreation.h"
 void updateState(u32,touchPosition);
 void sliderout(s16);
+void setBuffs(C3D_BufInfo* , C3D_AttrInfo*,u8 );
+
 extern folders *subselect;
 extern headfolders *headselect;
 extern folders *subfocus;

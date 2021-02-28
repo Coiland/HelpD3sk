@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
 	gfxInitDefault();
 	C3D_Init(C3D_DEFAULT_CMDBUF_SIZE);
 	C2D_Init(C2D_DEFAULT_MAX_OBJECTS);
-	C2D_Prepare();
+
 	touchPosition screen; 
 
 	
@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
 
 		hidTouchRead(&screen);
 
-		printf("\x1b[20;10H%03d; %03d", screen.px, screen.py);
+		//printf("\x1b[20;10H%03d; %03d", screen.px, screen.py);
 
 		//printf("\x1b[3;0H%03d", ytemp);
 		
@@ -53,8 +53,8 @@ int main(int argc, char* argv[])
 			updateState(kDown,screen);
 			C3D_RenderTargetClear(top, C3D_CLEAR_ALL, CLEAR_COLOR, 0);
 			C3D_FrameDrawOn(top);
+			C2D_SceneTarget(top);
 			topscreenrender();
-
 		C3D_FrameEnd(0);
 	}
 

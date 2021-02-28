@@ -14,6 +14,7 @@ void subDisplay(folders* top,s16 i)
 	u8 y=0;
 	while(temp!=NULL)
 	{
+		setBuffs(&buttonInfo,&attrInfo,1);
 		Mtx_Identity(&MV);
 		Mtx_Translate(&MV,-150.0f,-120.0f-y*55.0+i,0.0f,true);
 		if(temp==subfocus)
@@ -27,7 +28,7 @@ void subDisplay(folders* top,s16 i)
 
 		}
 		C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_modelview, &MV);
-		C3D_SetBufInfo(&buttonInfo);
+	
 		C3D_DrawArrays(GPU_TRIANGLES, 0, 54);
 		//x and y from upper left 
 		temp->x= -120;
