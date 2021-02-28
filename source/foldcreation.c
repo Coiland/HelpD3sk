@@ -4,22 +4,7 @@
 
 #include "headers.h"
 #include "foldcreation.h"
-struct headfolders_s
-{
-    char* name; 
-    float x,y;
-    headfolders* next;
-    folders* tail;
-    folders* head;
-    u8 count;
-};
- struct folders_s
-{
-	float x,y;
-	folders* next; 
-	char* text; 
-	char* name; 
-};
+
 headfolders* kinghead=NULL; 
 headfolders* kingtail=NULL;
 u8 maincount=0;

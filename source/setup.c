@@ -78,10 +78,7 @@ void setupBuffs()
 	memcpy(TABLEBACK_DATA , tableback, tableback_size);
 	BufInfo_Init(&backInfo);
 	BufInfo_Add(&backInfo, TABLEBACK_DATA , sizeof(vertex), 2, 0x10);
-
-
 	//table  vbo
-
 }
 
 void sceneExit()
