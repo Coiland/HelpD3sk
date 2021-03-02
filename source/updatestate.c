@@ -23,8 +23,6 @@ float subtranslate =0;
 void updateState(u32 keys, touchPosition screen)
 {
 	
-	
-
 	if(keys & KEY_B)
 		{
 		mainfocus=NULL;
@@ -123,7 +121,7 @@ void updateState(u32 keys, touchPosition screen)
 static void tapFocus(float x, float y)
 {
 	int i =4;
-	printf("\x1b[40;0H%03f; %03f", x, y);
+	//printf("\x1b[40;0H%03f; %03f", x, y);
 	x=-160+(((x-5)*320)/314) ;
 	y=120-(((y-5)*240)/234) ;
 	if(headselect!=NULL)
@@ -144,7 +142,7 @@ static void tapFocus(float x, float y)
 					subfocus=temp;
 					
 					
-					printf("\x1b[14;0H Focus name is %s", subfocus->name);
+					//printf("\x1b[14;0H Focus name is %s", subfocus->name);
 					return;
 				}
 				
@@ -176,7 +174,7 @@ static void tapFocus(float x, float y)
 						mainfocus=temp;
 					}
 					
-					printf("\x1b[14;0H Focus name is %s", mainfocus->name);
+					//printf("\x1b[14;0H Focus name is %s", mainfocus->name);
 					return;
 				}
 				

@@ -11,6 +11,7 @@ void mainDisplay(s16 i)
 		setBuffs(&buttonInfo,&attrInfo,1);
 		Mtx_Identity(&MV);
 		Mtx_Translate(&MV,-150.0f,-120.0f-y*55.0+i,0.0f,true);
+	
 		if(temp==mainfocus)
 		{
 			C3D_FVUnifSet(GPU_VERTEX_SHADER, uform_selectset, 1.0f, 1.0f,  1.0f, 1.0f);

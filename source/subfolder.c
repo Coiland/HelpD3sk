@@ -4,7 +4,7 @@
 void subDisplay(folders* top,s16 i)
 {
 	
-	printf("\x1b[14;10H Focus text is  %d", i);
+	//printf("\x1b[14;10H Focus text is  %d", i);
 		
 	folders* temp = top;
 	if (temp==NULL)
