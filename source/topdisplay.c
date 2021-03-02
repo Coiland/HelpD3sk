@@ -23,7 +23,7 @@ void topSetup()
 {
     dynamicBuf = C2D_TextBufNew(4096);
   
-   C2D_TextParse(&dynamicText[0], dynamicBuf, "hello");
+    C2D_TextParse(&dynamicText[0], dynamicBuf, "hello");
     C2D_TextParse(&dynamicText[1], dynamicBuf, "hello55554");
     C2D_TextOptimize(&dynamicText[0]);
     C2D_TextOptimize(&dynamicText[1]);
@@ -61,11 +61,11 @@ void topscreenrender()
         C2D_TextBufClear(dynamicBuf);
         if (i>2)
         {
-           C2D_DrawText(&dynamicText[1], C2D_AtBaseline | C2D_WithColor | C2D_AlignCenter, 180,100.0f, 0.5f, 1.75f, 1.75f, C2D_Color32f(0.667f,0.0f,0.667f,1.0f));
+          C2D_DrawText(&dynamicText[1], C2D_AtBaseline | C2D_WithColor | C2D_AlignCenter, 180,100.0f, 0.5f, 1.75f, 1.75f, C2D_Color32f(0.667f,0.0f,0.667f,1.0f));
         }
         else
         {
-            C2D_DrawText(&dynamicText[0], C2D_AtBaseline | C2D_WithColor | C2D_AlignCenter, 180,100.0f, 0.5f, 1.75f, 1.75f, C2D_Color32f(0.667f,0.0f,0.667f,1.0f));
+           C2D_DrawText(&dynamicText[0], C2D_AtBaseline | C2D_WithColor | C2D_AlignCenter, 180,100.0f, 0.5f, 1.75f, 1.75f, C2D_Color32f(0.667f,0.0f,0.667f,1.0f));
         }
        
          C2D_Flush();

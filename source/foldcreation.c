@@ -37,7 +37,7 @@ void addfolder(char* text,char * name, char* headname)
     folders* new=(folders*)malloc(sizeof(folders));
     if(new==NULL)
     {
-        printf("Invalid heap allocation while creating sub folder");
+        //printf("Invalid heap allocation while creating sub folder");
         return;
     }
     if (temp->head==NULL)
@@ -62,7 +62,7 @@ void addfolder(char* text,char * name, char* headname)
     //headfolders* temp;
     if(new==NULL)
     {
-        printf("Invalid heap allocation while creating head folder");
+        //printf("Invalid heap allocation while creating head folder");
         return;
     }
     if (kinghead==NULL)
