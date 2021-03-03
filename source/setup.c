@@ -2,6 +2,7 @@
 #include "setup.h"
 #include "foldcreation.h"
 #include "mainbuffs.h"
+#include "textbuffs.h"
 
 #define vertex_list_count (sizeof(vertex_list)/sizeof(vertex_list[0]))
 
@@ -10,13 +11,14 @@ shaderProgram_s program;
 int uLoc_projection,uLoc_modelview,uform_selectset,uform_light;
 C3D_Mtx MV;
 C3D_Mtx P;
-C3D_BufInfo buttonInfo,sliderInfo,limitInfo,backInfo;
+C3D_BufInfo buttonInfo,sliderInfo,limitInfo,backInfo,canvasInfo;
 C3D_AttrInfo attrInfo;
 
 static void* BUTTON_DATA;
 static void* SLIDER_DATA;
 static void* LIMIT_DATA;
 static void* TABLEBACK_DATA;
+static void* CANVAS_DATA;
 void createFolders()
 {
 	//dont put anything in focus initially
@@ -78,7 +80,12 @@ void setupBuffs()
 	memcpy(TABLEBACK_DATA , tableback, tableback_size);
 	BufInfo_Init(&backInfo);
 	BufInfo_Add(&backInfo, TABLEBACK_DATA , sizeof(vertex), 2, 0x10);
-	//table  vbo
+
+	CANVAS_DATA = linearAlloc(canvas_size);
+	memcpy(CANVAS_DATA, canvas_p, canvas_size);
+	BufInfo_Init(&canvasInfo);
+	BufInfo_Add(&canvasInfo, CANVAS_DATA , sizeof(vertex), 2, 0x10);
+	
 }
 
 void sceneExit()

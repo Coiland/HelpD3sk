@@ -38,7 +38,11 @@ void topSetup()
 void topscreenrender()
 {
     
-   
+    setBuffs(&canvasInfo,&attrInfo,1);
+	Mtx_Identity(&MV);
+	C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_modelview, &MV);
+	C3D_FVUnifSet(GPU_VERTEX_SHADER, uform_selectset, 0.0f, 0.0f,  0.0f, 0.0f);
+    C3D_DrawArrays(GPU_TRIANGLES, 0, 6);
 
     
    
@@ -53,10 +57,8 @@ void topscreenrender()
     else
     {   
         
-        //  C3D_BindProgram(&program);
-        // C3D_SetAttrInfo(&attrInfo);
-        // C3D_SetBufInfo(&testInfo);
-        // C3D_DrawArrays(GPU_TRIANGLES, 0, 3);
+       
+	
         C2D_Prepare();
         C2D_TextBufClear(dynamicBuf);
         if (i>2)
