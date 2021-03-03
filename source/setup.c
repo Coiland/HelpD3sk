@@ -2,6 +2,7 @@
 #include "setup.h"
 #include "foldcreation.h"
 #include "mainbuffs.h"
+#include "topbuffs.h"
 #include "textbuffs.h"
 
 #define vertex_list_count (sizeof(vertex_list)/sizeof(vertex_list[0]))
@@ -19,8 +20,13 @@ static void* SLIDER_DATA;
 static void* LIMIT_DATA;
 static void* TABLEBACK_DATA;
 static void* CANVAS_DATA;
+
+C2D_TextBuf dynamicBuf;
+C2D_Text *dynamicText_p;
+
 void createFolders()
 {
+	
 	//dont put anything in focus initially
 	addfolderhead("first");
 	
@@ -85,7 +91,14 @@ void setupBuffs()
 	memcpy(CANVAS_DATA, canvas_p, canvas_size);
 	BufInfo_Init(&canvasInfo);
 	BufInfo_Add(&canvasInfo, CANVAS_DATA , sizeof(vertex), 2, 0x10);
-	
+
+	dynamicBuf = C2D_TextBufNew(4096);
+	dynamicText_p=(C2D_Text*)malloc(maincount);
+	for(u8 i =0; i<maincount; i++)
+	{
+		 C2D_TextParse(&dynamicText_p[i], dynamicBuf, &(mainTitles[i][0]));
+   		 C2D_TextOptimize(&dynamicText_p[i]);
+	}
 }
 
 void sceneExit()

@@ -30,6 +30,12 @@ void mainDisplay(s16 i)
 	
 		temp->x= -120;
 		temp->y= -120.0f-y*55.0+i+236;
+
+		C2D_Prepare();
+        C2D_TextBufClear(dynamicBuf);
+        C2D_DrawText(&dynamicText_p[y], C2D_AtBaseline | C2D_WithColor | C2D_AlignCenter, temp->x + 30.0f,temp->y-10.0f, 0.5f, 1.75f, 1.75f, C2D_Color32f(0.667f,0.0f,0.667f,1.0f));
+        C2D_Flush();
+
 		temp=temp->next;
 		y++;
 	}

@@ -2,7 +2,6 @@
 --------Author: Insteadof2--------
 */
 
-#include "headers.h"
 #include "foldcreation.h"
 
 headfolders* kinghead=NULL; 
@@ -79,6 +78,7 @@ void addfolder(char* text,char * name, char* headname)
     new->next=NULL;
     new->head=NULL;
     new->tail=NULL;
+    
     kingtail=new;
     maincount++;
  }

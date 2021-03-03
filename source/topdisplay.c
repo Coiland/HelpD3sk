@@ -1,10 +1,10 @@
 #include "updatestate.h"
 #include "topdisplay.h"
-#include "textbuffs.h"
+#include "topbuffs.h"
 #include "mainbuffs.h"
 #include "setup.h"
-C2D_TextBuf dynamicBuf;
-C2D_Text dynamicText[2];
+C2D_TextBuf dynamicsBuf;
+C2D_Text dynamicsText[2];
 
 // C3D_BufInfo testInfo;
 // static void* TEST_DATA;
@@ -21,12 +21,12 @@ int i =0;
 
 void topSetup()
 {
-    dynamicBuf = C2D_TextBufNew(4096);
+    dynamicsBuf = C2D_TextBufNew(4096);
   
-    C2D_TextParse(&dynamicText[0], dynamicBuf, "hello");
-    C2D_TextParse(&dynamicText[1], dynamicBuf, "hello55554");
-    C2D_TextOptimize(&dynamicText[0]);
-    C2D_TextOptimize(&dynamicText[1]);
+    C2D_TextParse(&dynamicsText[0], dynamicsBuf, "hello");
+    C2D_TextParse(&dynamicsText[1], dynamicsBuf, "hello55554");
+    C2D_TextOptimize(&dynamicsText[0]);
+    C2D_TextOptimize(&dynamicsText[1]);
 
 
     // TEST_DATA = linearAlloc(sizeof(randotriangle));
@@ -60,14 +60,14 @@ void topscreenrender()
        
 	
         C2D_Prepare();
-        C2D_TextBufClear(dynamicBuf);
+        C2D_TextBufClear(dynamicsBuf);
         if (i>2)
         {
-          C2D_DrawText(&dynamicText[1], C2D_AtBaseline | C2D_WithColor | C2D_AlignCenter, 180,100.0f, 0.5f, 1.75f, 1.75f, C2D_Color32f(0.667f,0.0f,0.667f,1.0f));
+          C2D_DrawText(&dynamicsText[1], C2D_AtBaseline | C2D_WithColor | C2D_AlignCenter, 180,100.0f, 0.5f, 1.75f, 1.75f, C2D_Color32f(0.667f,0.0f,0.667f,1.0f));
         }
         else
         {
-           C2D_DrawText(&dynamicText[0], C2D_AtBaseline | C2D_WithColor | C2D_AlignCenter, 180,100.0f, 0.5f, 1.75f, 1.75f, C2D_Color32f(0.667f,0.0f,0.667f,1.0f));
+           C2D_DrawText(&dynamicsText[0], C2D_AtBaseline | C2D_WithColor | C2D_AlignCenter, 180,100.0f, 0.5f, 1.75f, 1.75f, C2D_Color32f(0.667f,0.0f,0.667f,1.0f));
         }
        
          C2D_Flush();
