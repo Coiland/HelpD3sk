@@ -3,6 +3,8 @@
 */
 
 #include "foldcreation.h"
+#include "headers.h"
+#include "setup.h"
 
 headfolders* kinghead=NULL; 
 headfolders* kingtail=NULL;
@@ -16,13 +18,9 @@ u8 maincount=0;
  *                      to be connected to. Pass NULL if you want to create a new head
  * @result              A pointer to new button 
 */
-
-//  void creategraphic(folders* new)
-//  {
-
-//  }
 void addfolder(char* text,char * name, char* headname) 
  {
+    static u16 i =0;
     headfolders *temp=kinghead;
     while(strcmp(headname,temp->name)!=0)
     {
@@ -52,7 +50,12 @@ void addfolder(char* text,char * name, char* headname)
     // printf("\x1b[14;0H Focus name is %s", new->name);
     new->next=NULL;
     new->text=text;
-
+    // if(name!=NULL)
+    // {
+    //     C2D_TextParse(&(mainName_p[i]),mainnameBuf,new->name);
+    //     C2D_TextOptimize(&(mainName_p[i]));
+    // }
+    i++;
  }
 
  void addfolderhead(char* name)
@@ -78,8 +81,12 @@ void addfolder(char* text,char * name, char* headname)
     new->next=NULL;
     new->head=NULL;
     new->tail=NULL;
-    
     kingtail=new;
+    if(name!=NULL)
+    {
+        C2D_TextParse(&(mainName_p[maincount]),mainnameBuf,new->name);
+        C2D_TextOptimize(&(mainName_p[maincount]));
+    }
     maincount++;
  }
  

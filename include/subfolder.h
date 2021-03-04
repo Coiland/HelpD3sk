@@ -6,5 +6,5 @@
 #define SUBFOLDER_H
 #include "headers.h"
 #include "foldcreation.h"
-void subDisplay(folders*,s16);
+void subDisplay(headfolders*,s16);
 #endif

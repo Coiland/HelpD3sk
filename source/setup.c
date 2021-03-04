@@ -21,14 +21,26 @@ static void* LIMIT_DATA;
 static void* TABLEBACK_DATA;
 static void* CANVAS_DATA;
 
-C2D_TextBuf dynamicBuf;
-C2D_Text *dynamicText_p;
+C2D_TextBuf subnameBuf;
+C2D_Text *subName_p;
+
+C2D_TextBuf mainnameBuf;
+C2D_Text *mainName_p;
+
+u16 buttonwidth=270;
+u16 buttonheight=45;
+u32 mainsize=100;
+u32 subsize=400;
 
 void createFolders()
 {
-	
+	mainnameBuf = C2D_TextBufNew(4096);
+	subnameBuf = C2D_TextBufNew(4096);
+
+	mainName_p=(C2D_Text*)malloc(4096);
+	subName_p=(C2D_Text*)malloc(4096);
 	//dont put anything in focus initially
-	addfolderhead("first");
+	addfolderhead("this is the ");
 	
 	addfolderhead("second");
 	addfolderhead("third");
@@ -50,6 +62,7 @@ void createFolders()
 }
 void setupBuffs()
 {
+	 
 	vshader_dvlb = DVLB_ParseFile((u32*)vshader_shbin, vshader_shbin_size);
 	shaderProgramInit(&program);
 	shaderProgramSetVsh(&program, &vshader_dvlb->DVLE[0]);
@@ -92,13 +105,21 @@ void setupBuffs()
 	BufInfo_Init(&canvasInfo);
 	BufInfo_Add(&canvasInfo, CANVAS_DATA , sizeof(vertex), 2, 0x10);
 
-	dynamicBuf = C2D_TextBufNew(4096);
-	dynamicText_p=(C2D_Text*)malloc(maincount);
-	for(u8 i =0; i<maincount; i++)
-	{
-		 C2D_TextParse(&dynamicText_p[i], dynamicBuf, &(mainTitles[i][0]));
-   		 C2D_TextOptimize(&dynamicText_p[i]);
-	}
+	// headfolders *temp = kinghead;
+	// dBuf = C2D_TextBufNew(4096);
+	// dynamicText_p=(C2D_Text*)malloc(4096);
+	// if (dynamicText_p==NULL)
+	// {
+	// 	return;
+	// }
+	// u8 i=0;
+	// while(temp!=NULL)
+	// {
+	// 	C2D_TextParse(&(dynamicText_p[i]), dynamicBuf,temp->name);
+   	// 	C2D_TextOptimize(&(dynamicText_p[i]));
+	// 	temp=temp->next;
+	// 	i++;
+	// }
 }
 
 void sceneExit()

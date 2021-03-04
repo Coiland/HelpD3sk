@@ -5,6 +5,7 @@
 #include "setup.h"
 C2D_TextBuf dynamicsBuf;
 C2D_Text dynamicsText[2];
+C2D_Text* dynamicsthing;
 
 // C3D_BufInfo testInfo;
 // static void* TEST_DATA;
@@ -18,15 +19,18 @@ const vertex randotriangle[] =
 
 };
 int i =0;
+const char text[][30]= {"hello","goodbye"};
+const char* rando_p=text;
 
 void topSetup()
 {
     dynamicsBuf = C2D_TextBufNew(4096);
-  
-    C2D_TextParse(&dynamicsText[0], dynamicsBuf, "hello");
-    C2D_TextParse(&dynamicsText[1], dynamicsBuf, "hello55554");
-    C2D_TextOptimize(&dynamicsText[0]);
-    C2D_TextOptimize(&dynamicsText[1]);
+    dynamicsthing=(C2D_Text*)malloc(10*sizeof(char));
+    
+    C2D_TextParse(&dynamicsthing[0],dynamicsBuf,&(text[1][0]));
+    C2D_TextParse(&dynamicsthing[1], dynamicsBuf, &(text[0][0]));
+    C2D_TextOptimize(&dynamicsthing[0]);
+    C2D_TextOptimize(&dynamicsthing[1]);
 
 
     // TEST_DATA = linearAlloc(sizeof(randotriangle));
@@ -56,22 +60,18 @@ void topscreenrender()
     }
     else
     {   
-        
-       
-	
         C2D_Prepare();
         C2D_TextBufClear(dynamicsBuf);
-        if (i>2)
-        {
-          C2D_DrawText(&dynamicsText[1], C2D_AtBaseline | C2D_WithColor | C2D_AlignCenter, 180,100.0f, 0.5f, 1.75f, 1.75f, C2D_Color32f(0.667f,0.0f,0.667f,1.0f));
-        }
-        else
-        {
-           C2D_DrawText(&dynamicsText[0], C2D_AtBaseline | C2D_WithColor | C2D_AlignCenter, 180,100.0f, 0.5f, 1.75f, 1.75f, C2D_Color32f(0.667f,0.0f,0.667f,1.0f));
-        }
+        //if (i>2)
+        //{
+        C2D_DrawText(&dynamicsthing[1], C2D_AtBaseline | C2D_WithColor | C2D_AlignCenter, 180,50.0f, 0.5f, 1.75f, 1.75f, C2D_Color32f(0.667f,0.0f,0.667f,1.0f));
+       // }
+        //else
+       // {
+           C2D_DrawText(&dynamicsthing[0], C2D_AtBaseline | C2D_WithColor | C2D_AlignCenter, 180,100.0f, 0.5f, 1.75f, 1.75f, C2D_Color32f(0.667f,0.0f,0.667f,1.0f));
+        //}
        
          C2D_Flush();
-	   
     }
    
     i++;

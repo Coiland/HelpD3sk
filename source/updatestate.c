@@ -191,7 +191,7 @@ static void display(s16 i)
 	if(headselect!=NULL)
 	{
 		C3D_FVUnifSet(GPU_VERTEX_SHADER, uform_light, 0.0f, 0.5f,  0.0f, 1.0f);
-		subDisplay(mainfocus->head,i);
+		subDisplay(mainfocus,i);
 	}
 	else
 	{
