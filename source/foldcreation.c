@@ -20,7 +20,6 @@ u8 maincount=0;
 */
 void addfolder(char* text,char * name, char* headname) 
  {
-    static u16 i =0;
     headfolders *temp=kinghead;
     while(strcmp(headname,temp->name)!=0)
     {
@@ -31,10 +30,10 @@ void addfolder(char* text,char * name, char* headname)
         }   
     }
     (temp->count)++;
+
     folders* new=(folders*)malloc(sizeof(folders));
     if(new==NULL)
     {
-        //printf("Invalid heap allocation while creating sub folder");
         return;
     }
     if (temp->head==NULL)
@@ -47,24 +46,16 @@ void addfolder(char* text,char * name, char* headname)
     }
     temp->tail=new;
     new->name=name;
-    // printf("\x1b[14;0H Focus name is %s", new->name);
     new->next=NULL;
     new->text=text;
-    // if(name!=NULL)
-    // {
-    //     C2D_TextParse(&(mainName_p[i]),mainnameBuf,new->name);
-    //     C2D_TextOptimize(&(mainName_p[i]));
-    // }
-    i++;
  }
 
  void addfolderhead(char* name)
  {
     headfolders* new=(headfolders*)malloc(sizeof(headfolders));
-    //headfolders* temp;
+
     if(new==NULL)
     {
-        //printf("Invalid heap allocation while creating head folder");
         return;
     }
     if (kinghead==NULL)
@@ -76,17 +67,12 @@ void addfolder(char* text,char * name, char* headname)
         kingtail->next = new; 
         
     }
-    //temp = tail; 
+
     new->name=name;
     new->next=NULL;
     new->head=NULL;
     new->tail=NULL;
     kingtail=new;
-    if(name!=NULL)
-    {
-        C2D_TextParse(&(mainName_p[maincount]),mainnameBuf,new->name);
-        C2D_TextOptimize(&(mainName_p[maincount]));
-    }
     maincount++;
  }
  

@@ -3,10 +3,11 @@
 #include "subfolder.h"
 #include "mainfolder.h"
 #include "foldcreation.h"
-static void tapFocus(float,float);
+static s16 tapFocus(float,float,s16);
 static void display(s16);
-static s16 ytemp=0;
-static s16 first=0;
+static s16 checkBounds(s16);
+//hold these values throughout 
+static s16 first=0;	//printf("\x1b[14;10H Focus text is  %d", i);
 static s16 hold=0;
 static u16 penx=0;
 static u16 peny=0;
@@ -14,25 +15,25 @@ static u16 tapx=0;
 static u16 tapy=0;
 static u8 i=0;
 static u8 holdcount=0;
+
 headfolders *mainfocus=NULL;
 folders *subfocus=NULL;
 headfolders *headselect=NULL;
 float maxtranslate =0;
 float subtranslate =0;
 
-void updateState(u32 keys, touchPosition screen)
+void updateState(u32 keys, touchPosition screen)	//printf("\x1b[14;10H Focus text is  %d", i);
 {
 	
+	s16 ytemp=0;
 	if(keys & KEY_B)
 		{
 		mainfocus=NULL;
 		subfocus=NULL;
 		headselect=NULL;
-		ytemp=0;
 		}
 	else
 	{
-
 		if(i==0 && (screen.py!=0||screen.px!=0))
 		{
 			first=screen.py + hold;
@@ -58,56 +59,19 @@ void updateState(u32 keys, touchPosition screen)
 			{
 				if(holdcount<20 && holdcount>0)
 				{
-					tapFocus(penx,peny);
+					//check if the tap was in bounds, if its a second tap we go into subfolders and reset scroll
+					ytemp=tapFocus(penx,peny,ytemp);
 				}
 			}
 			holdcount =0;
 			i=0;
 		}
-
+		//hold for next iteration
 		penx=screen.px;
 		peny=screen.py;
-		
-		if((-120.0+ytemp+236)<116)
-		{
-			ytemp=0;
-		}
-		else if (headselect!=NULL)
-		{
-			if((-120.0-((headselect->count)-1)*55.0+236)<-71)
-			{
-				subtranslate=-187 + ((headselect->count)-1)*55.0;
-
-				if((-120.0+ytemp-((headselect->count)-1)*55.0+236)>-71)
-				{
-					ytemp= subtranslate;
-				}
-			}
-			else
-			{
-				ytemp=0;
-			}
-		}
-		else if (headselect==NULL)
-		{
-			
-			if((-120.0-(maincount-1)*55.0+236)<-71)
-			{
-				maxtranslate =-187 + (maincount-1)*55.0;
-				//printf("this is man count %d",maincount);
-				if((-120.0+ytemp-(maincount-1)*55.0+236)>-71)
-				{
-					ytemp= maxtranslate;
-				}
-			}
-			else
-			{
-				ytemp=0;
-			}
-		}
-		
-		
-		//printf("this is : %d", ytemp);
+	
+		//check bounds while scrolling will just return og value if no hits
+		ytemp=checkBounds(ytemp);
 	}
 		hold=ytemp;
         display(ytemp);
@@ -115,13 +79,8 @@ void updateState(u32 keys, touchPosition screen)
 }
 
 		
-
-
-
-static void tapFocus(float x, float y)
+static s16 tapFocus(float x, float y,s16 ytemp)
 {
-	int i =4;
-	//printf("\x1b[40;0H%03f; %03f", x, y);
 	x=-160+(((x-5)*320)/314) ;
 	y=120-(((y-5)*240)/234) ;
 	if(headselect!=NULL)
@@ -138,18 +97,12 @@ static void tapFocus(float x, float y)
 			{
 				if ((y<= temp->y )&& (y>=(temp->y-45)))
 				{
-				
 					subfocus=temp;
-					
-					
-					//printf("\x1b[14;0H Focus name is %s", subfocus->name);
-					return;
+					return ytemp;
 				}
 				
 			}
 			temp=temp->next;
-			i++;
-			//i+=2;
 		}
 
 	}
@@ -159,7 +112,6 @@ static void tapFocus(float x, float y)
 		headfolders *temp = kinghead;
 		while(temp!=NULL)
 		{
-			//printf("\x1b[%d;0H%f:%f",i,temp->x,temp->y);
 			if((x>= temp->x )&& (x<=(temp->x+270)))
 			{
 				if ((y<= temp->y )&& (y>=(temp->y-45)))
@@ -173,16 +125,13 @@ static void tapFocus(float x, float y)
 					{
 						mainfocus=temp;
 					}
-					
-					//printf("\x1b[14;0H Focus name is %s", mainfocus->name);
-					return;
+					return ytemp;
 				}
-				
 			}
 			temp=temp->next;
-			//i+=2;
 		}
 	}
+	return 0;
 }
 
 static void display(s16 i)
@@ -225,6 +174,7 @@ void sliderout(s16 i)
 	C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_modelview, &MV);
 	C3D_DrawArrays(GPU_TRIANGLES, 0, 12);	
 }
+
 void setBuffs(C3D_BufInfo* vbo,C3D_AttrInfo* attributes, u8 projflag)
 {
 	C3D_BindProgram(&program);
@@ -243,4 +193,65 @@ void setBuffs(C3D_BufInfo* vbo,C3D_AttrInfo* attributes, u8 projflag)
 	C3D_TexEnvInit(env);
 	C3D_TexEnvSrc(env, C3D_Both, GPU_PRIMARY_COLOR, 0, 0);
 	C3D_TexEnvFunc(env, C3D_Both, GPU_REPLACE);
+}
+
+void textSet(float x, float y, char* name)
+{
+		C2D_Text *Name_p=(C2D_Text*)malloc(100);
+		if(Name_p==NULL)
+		{
+			return;
+		}
+		float left=(x + 160.0f)*(400.0f/320.0f);
+		float top=240.0f-(y + 120.0f);
+        C2D_TextParse(Name_p,nameBuf,name);
+        C2D_TextOptimize(Name_p);
+    
+		C2D_Prepare();
+        C2D_TextBufClear(nameBuf);
+        C2D_DrawText(Name_p, C2D_AtBaseline | C2D_WithColor | C2D_AlignCenter | C2D_WordWrap,left+(buttonwidth/2)*400.0f/320.0f,top+buttonheight/2 + 10.0f, 0.2f, 1.2f, 1.1f, C2D_Color32f(0.0f,0.0f,0.0f,1.0f),200.0f);
+        C2D_Flush();
+		free(Name_p);
+}
+
+static s16 checkBounds(s16 ytemp)
+{
+	
+	if((-120.0+ytemp+236)<116)
+		{
+			ytemp=0;
+		}
+		else if (headselect!=NULL)
+		{
+			if((-120.0-((headselect->count)-1)*55.0+236)<-71)
+			{
+				subtranslate=-187 + ((headselect->count)-1)*55.0;
+
+				if((-120.0+ytemp-((headselect->count)-1)*55.0+236)>-71)
+				{
+					ytemp= subtranslate;
+				}
+			}
+			else
+			{
+				ytemp=0;
+			}
+		}
+		else if (headselect==NULL)
+		{
+			
+			if((-120.0-(maincount-1)*55.0+236)<-71)
+			{
+				maxtranslate =-187 + (maincount-1)*55.0;
+				if((-120.0+ytemp-(maincount-1)*55.0+236)>-71)
+				{
+					ytemp= maxtranslate;
+				}
+			}
+			else
+			{
+				ytemp=0;
+			}
+		}
+		return ytemp;
 }

@@ -21,8 +21,8 @@ static void* LIMIT_DATA;
 static void* TABLEBACK_DATA;
 static void* CANVAS_DATA;
 
-C2D_TextBuf subnameBuf;
-C2D_Text *subName_p;
+C2D_TextBuf nameBuf;
+
 
 C2D_TextBuf mainnameBuf;
 C2D_Text *mainName_p;
@@ -34,11 +34,11 @@ u32 subsize=400;
 
 void createFolders()
 {
-	mainnameBuf = C2D_TextBufNew(4096);
-	subnameBuf = C2D_TextBufNew(4096);
+	//mainnameBuf = C2D_TextBufNew(4096);
+	nameBuf = C2D_TextBufNew(4096);
 
-	mainName_p=(C2D_Text*)malloc(4096);
-	subName_p=(C2D_Text*)malloc(4096);
+	//mainName_p=(C2D_Text*)malloc(4096);
+	
 	//dont put anything in focus initially
 	addfolderhead("this is the ");
 	
@@ -67,18 +67,14 @@ void setupBuffs()
 	shaderProgramInit(&program);
 	shaderProgramSetVsh(&program, &vshader_dvlb->DVLE[0]);
 
-
 	uLoc_projection = shaderInstanceGetUniformLocation(program.vertexShader, "P");
 	uLoc_modelview = shaderInstanceGetUniformLocation(program.vertexShader, "MV");
 	uform_selectset = shaderInstanceGetUniformLocation(program.vertexShader, "S");
 	uform_light= shaderInstanceGetUniformLocation(program.vertexShader, "L");
 	
-	
 	AttrInfo_Init(&attrInfo);
 	AttrInfo_AddLoader(&attrInfo, 0, GPU_FLOAT, 3); 
 	AttrInfo_AddLoader(&attrInfo, 1, GPU_FLOAT, 3); 
-
-	//printf("hello");
 
 	SLIDER_DATA = linearAlloc(bslider_size);
 	memcpy(SLIDER_DATA , sliderref, bslider_size);
@@ -105,31 +101,40 @@ void setupBuffs()
 	BufInfo_Init(&canvasInfo);
 	BufInfo_Add(&canvasInfo, CANVAS_DATA , sizeof(vertex), 2, 0x10);
 
-	// headfolders *temp = kinghead;
-	// dBuf = C2D_TextBufNew(4096);
-	// dynamicText_p=(C2D_Text*)malloc(4096);
-	// if (dynamicText_p==NULL)
-	// {
-	// 	return;
-	// }
-	// u8 i=0;
-	// while(temp!=NULL)
-	// {
-	// 	C2D_TextParse(&(dynamicText_p[i]), dynamicBuf,temp->name);
-   	// 	C2D_TextOptimize(&(dynamicText_p[i]));
-	// 	temp=temp->next;
-	// 	i++;
-	// }
 }
 
 void sceneExit()
 {
+
+	//freeing linked list
+	headfolders* temp=NULL;
+	folders* subtemp=NULL;
+	folders* kingsub=NULL;
+	while(kinghead!=NULL)
+	{
+		kingsub=kinghead->head;
+		while(kingsub!=NULL)
+		{
+			subtemp=kingsub;
+			kingsub=kingsub->next;
+			free(subtemp);
+		}
+		temp=kinghead;
+		kinghead=kinghead->next;
+		free(temp);
+	}
+	free(kinghead);
+	free(kingsub);
+
+	//freeing text buffers
 	//freeing buffer
 	linearFree(BUTTON_DATA);
 	linearFree(SLIDER_DATA);
 	linearFree(LIMIT_DATA);
 	linearFree(TABLEBACK_DATA);
+
 	//freeing shader
 	shaderProgramFree(&program);
 	DVLB_Free(vshader_dvlb);
+
 }

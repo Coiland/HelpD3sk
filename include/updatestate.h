@@ -9,11 +9,11 @@
 void updateState(u32,touchPosition);
 void sliderout(s16);
 void setBuffs(C3D_BufInfo* , C3D_AttrInfo*,u8 );
+extern void textSet(float , float , char*);
 
 extern folders *subselect;
 extern headfolders *headselect;
 extern folders *subfocus;
 extern headfolders *mainfocus;
-extern float subtranslate,maxtranslate;
 
 #endif

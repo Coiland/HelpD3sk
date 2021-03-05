@@ -19,10 +19,7 @@ int main(int argc, char* argv[])
 	C2D_Init(C2D_DEFAULT_MAX_OBJECTS);
 
 	touchPosition screen; 
-
 	
-
-	//consoleInit(GFX_TOP, NULL);
 	C3D_RenderTarget* top = C3D_RenderTargetCreate(240, 400, GPU_RB_RGBA8, GPU_RB_DEPTH24_STENCIL8);
 	C3D_RenderTargetSetOutput(top, GFX_TOP, GFX_LEFT, DISPLAY_TRANSFER_FLAGS);
 
@@ -35,18 +32,12 @@ int main(int argc, char* argv[])
 
 	while (aptMainLoop())
 	{
-		
 		hidScanInput();
 		u32 kDown = hidKeysDown();
 		if (kDown & KEY_START)
 			break; 
-
 		hidTouchRead(&screen);
 
-		//printf("\x1b[20;10H%03d; %03d", screen.px, screen.py);
-
-		//printf("\x1b[3;0H%03d", ytemp);
-		
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 			C3D_RenderTargetClear(bot, C3D_CLEAR_ALL, CLEAR_COLOR, 0);
 			C3D_FrameDrawOn(bot);
