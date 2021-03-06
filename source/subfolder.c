@@ -1,10 +1,10 @@
 #include "subfolder.h"
 #include "setup.h"
 #include "updatestate.h"
-void subDisplay(headfolders* headtofolder,s16 i)
+void subDisplay(s16 i)
 {
 
-	folders* temp = headtofolder->head;
+	folders* temp = headselect->head;
 	if (temp==NULL)
 	{
 		return;
