@@ -12,6 +12,7 @@ struct headfolders
     char* name; 
     float x,y;
     headfolders* next;
+    headfolders* prev;
     folders* tail;
     folders* head;
     u8 count;
@@ -19,7 +20,8 @@ struct headfolders
  struct folders
 {
 	float x,y;
-	folders* next; 
+	folders* next;
+    folders* prev; 
 	char* text; 
 	char* name; 
 };

@@ -44,6 +44,7 @@ void addfolder(char* text,char * name, char* headname)
     {
         temp->tail->next=new;
     }
+    new->prev=temp->tail;
     temp->tail=new;
     new->name=name;
     new->next=NULL;
@@ -64,10 +65,9 @@ void addfolder(char* text,char * name, char* headname)
     }
     else
     {
-        kingtail->next = new; 
-        
+        kingtail->next = new;  
     }
-
+    new->prev=kingtail;
     new->name=name;
     new->next=NULL;
     new->head=NULL;

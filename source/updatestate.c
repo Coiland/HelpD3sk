@@ -8,14 +8,14 @@ static void display(s16);
 static s16 checkBounds(s16);
 //hold these values throughout 
 static s16 first=0;	//printf("\x1b[14;10H Focus text is  %d", i);
-static s16 hold=0;
+static float hold=0;
 static u16 penx=0;
 static u16 peny=0;
 static u16 tapx=0;
 static u16 tapy=0;
 static u8 i=0;
 static u8 holdcount=0;
-
+static u8 passflag=0;
 headfolders *mainfocus=NULL;
 folders *subfocus=NULL;
 headfolders *headselect=NULL;
@@ -25,56 +25,69 @@ float subtranslate =0;
 void updateState(u32 keys, touchPosition screen)	//printf("\x1b[14;10H Focus text is  %d", i);
 {
 	
-	s16 ytemp=0;
-	if(keys & KEY_B)
-		{
-		mainfocus=NULL;
-		subfocus=NULL;
-		headselect=NULL;
-		}
-	else
+	float ytemp=0;
+	if (passflag==1)
 	{
-		if(i==0 && (screen.py!=0||screen.px!=0))
-		{
-			first=screen.py + hold;
-			i=1;
-			holdcount++;
-			tapx=screen.px;
-			tapy=screen.py;
-		}
-		else if (i==1 && ((abs(screen.py-tapy))<5)&& ((abs(screen.px-tapx))<5))
-		{
-			holdcount++;
-		}
-		else if (screen.py!=0 || screen.px!=0)
-		{
-			holdcount=0;
-		}
-		ytemp=-screen.py+first;
 
-		if(screen.py==0 && screen.px==0)
-		{
-			ytemp=hold;
-			if(i==1)
-			{
-				if(holdcount<20 && holdcount>0)
-				{
-					//check if the tap was in bounds, if its a second tap we go into subfolders and reset scroll
-					ytemp=tapFocus(penx,peny,ytemp);
-				}
-			}
-			holdcount =0;
-			i=0;
-		}
-		//hold for next iteration
-		penx=screen.px;
-		peny=screen.py;
 	
-		//check bounds while scrolling will just return og value if no hits
+		if(keys & KEY_B)
+			{
+			mainfocus=NULL;
+			subfocus=NULL;
+			headselect=NULL;
+			}
+		else if ((keys & KEY_A)&&mainfocus!=NULL && headselect==NULL)
+		{
+				headselect=mainfocus;
+		}
+		else
+		{
+			if(i==0 && (screen.py!=0||screen.px!=0))
+			{
+				first=screen.py + hold;
+				i=1;
+				holdcount++;
+				tapx=screen.px;
+				tapy=screen.py;
+			}
+			else if (i==1 && ((abs(screen.py-tapy))<5)&& ((abs(screen.px-tapx))<5))
+			{
+				holdcount++;
+			}
+			else if (screen.py!=0 || screen.px!=0)
+			{
+				holdcount=0;
+			}
+			ytemp=-screen.py+first;
+
+			if(screen.py==0 && screen.px==0)
+			{
+				ytemp=hold;
+				if(i==1)
+				{
+					if(holdcount<20 && holdcount>0)
+					{
+						//check if the tap was in bounds, if its a second tap we go into subfolders and reset scroll
+						ytemp=tapFocus(penx,peny,ytemp);
+					}
+				}
+				holdcount =0;
+				i=0;
+			}
+			//hold for next iteration
+			penx=screen.px;
+			peny=screen.py;
+		
+			//check bounds while scrolling will just return og value if no hits	
+		}
+		
 		ytemp=checkBounds(ytemp);
-	}
-		hold=ytemp;
-        display(ytemp);
+		
+		
+	}		
+	hold=ytemp;
+    display(ytemp);
+	passflag=1;
 
 }
 
@@ -88,11 +101,6 @@ static s16 tapFocus(float x, float y,s16 ytemp)
 		folders *temp = mainfocus->head;
 		while(temp!=NULL)
 		{
-			if(i==4)
-			{
-				
-			}
-			
 			if((x>= temp->x )&& (x<=(temp->x+270)))
 			{
 				if ((y<= temp->y )&& (y>=(temp->y-45)))
@@ -217,41 +225,96 @@ void textSet(float x, float y, char* name)
 static s16 checkBounds(s16 ytemp)
 {
 	
-	if((-120.0+ytemp+236)<116)
+	// if((kinghead->y)<116)
+	// {
+	// 	ytemp=0;
+	// }
+	// else if (((kingtail->y))>-71)
+	// {
+	// 	maxtranslate =-187 + (maincount-1)*55.0;
+	// 	ytemp= maxtranslate;
+	// }
+	
+	if((116.0+ytemp)<116)
+	{
+		ytemp=0;
+	}
+	else if (headselect!=NULL)
+	{
+		if((-120.0-((headselect->count)-1)*55.0+236)<-71)
+		{
+			subtranslate=-187 + ((headselect->count)-1)*55.0;
+
+			if((-120.0+ytemp-((headselect->count)-1)*55.0+236)>-71)
+			{
+					ytemp= subtranslate;
+			}
+		}
+		else
 		{
 			ytemp=0;
 		}
-		else if (headselect!=NULL)
-		{
-			if((-120.0-((headselect->count)-1)*55.0+236)<-71)
-			{
-				subtranslate=-187 + ((headselect->count)-1)*55.0;
-
-				if((-120.0+ytemp-((headselect->count)-1)*55.0+236)>-71)
-				{
-					ytemp= subtranslate;
-				}
-			}
-			else
-			{
-				ytemp=0;
-			}
-		}
-		else if (headselect==NULL)
-		{
+	}
+	else if (headselect==NULL)
+	{
 			
-			if((-120.0-(maincount-1)*55.0+236)<-71)
+		if((-120.0-(maincount-1)*55.0+236)<-71)
+		{
+			maxtranslate =-187 + (maincount-1)*55.0;
+			if((-120.0+ytemp-(maincount-1)*55.0+236)>-71)
 			{
-				maxtranslate =-187 + (maincount-1)*55.0;
-				if((-120.0+ytemp-(maincount-1)*55.0+236)>-71)
-				{
 					ytemp= maxtranslate;
-				}
-			}
-			else
-			{
-				ytemp=0;
 			}
 		}
-		return ytemp;
+		else
+		{
+				ytemp=0;
+		}
+	}
+	return ytemp;
 }
+
+// void padHandleDown()
+// {
+// 	if(headselect!=NULL && subfocus==NULL)
+// 	{
+// 		subfocus=headselect->head;
+// 	}
+// 	else if(headselect!=NULL)
+// 	{
+// 		subfocus=subfocus->next;
+// 		paddleBownds();
+// 	}
+// 	else if(mainfocus!=NULL)
+// 	{
+// 		mainfocus=mainfocus->next;
+// 		paddlowBownds();
+// 	}
+// 	else
+// 	{
+// 		mainfocus=kinghead;
+// 	}
+// }
+
+// float paddleBounds_h(float val)
+// {
+// 	if((val)>116)
+// 	{
+// 		return (116-mainfocus->y);
+// 	}
+// 	else
+// 	{
+// 		return 0;
+// 	}
+// }
+// float paddleBounds_l(float val)
+// {
+// 	if((val-55)<)
+// 	{
+// 		return (116-mainfocus->y);
+// 	}
+// 	else
+// 	{
+// 		return 0;
+// 	}
+// }

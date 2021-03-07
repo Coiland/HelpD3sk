@@ -30,7 +30,7 @@ void mainDisplay(s16 i)
 		C3D_DrawArrays(GPU_TRIANGLES, 0, 30);
 	
 		temp->x= -120;
-		temp->y= -120.0f-y*55.0+i+236;
+		temp->y= 116.0f-y*55.0+i;
 		
 		textSet(temp->x,temp->y, temp->name);
 		temp=temp->next;
