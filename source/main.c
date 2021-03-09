@@ -35,7 +35,10 @@ int main(int argc, char* argv[])
 		hidScanInput();
 		u32 kDown = hidKeysDown();
 		if (kDown & KEY_START)
+		{
 			break; 
+		}
+			
 		hidTouchRead(&screen);
 
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);

@@ -3,6 +3,15 @@
 #include "subfolder.h"
 #include "mainfolder.h"
 #include "foldcreation.h"
+
+#define TOPb_HEIGHT (116.0f)
+#define BOTTOMb_HEIGHT (71.0f)
+#define MAX_HEIGHT (120.0f)
+
+static float paddleBounds_d(float);
+static float padHandleDown(float);
+static float paddleBounds_u(float);
+static float padHandleUP(float);
 static s16 tapFocus(float,float,s16);
 static void display(s16);
 static s16 checkBounds(s16);
@@ -15,80 +24,80 @@ static u16 tapx=0;
 static u16 tapy=0;
 static u8 i=0;
 static u8 holdcount=0;
-static u8 passflag=0;
+static float ytemp=0;
+
+static float maxtranslate =0;
+static float subtranslate =0;
 headfolders *mainfocus=NULL;
 folders *subfocus=NULL;
 headfolders *headselect=NULL;
-float maxtranslate =0;
-float subtranslate =0;
+	
 
 void updateState(u32 keys, touchPosition screen)	//printf("\x1b[14;10H Focus text is  %d", i);
 {
 	
-	float ytemp=0;
-	if (passflag==1)
+	if(keys & KEY_B)
 	{
-
-	
-		if(keys & KEY_B)
-			{
-			mainfocus=NULL;
-			subfocus=NULL;
-			headselect=NULL;
-			}
-		else if ((keys & KEY_A)&&mainfocus!=NULL && headselect==NULL)
+		mainfocus=NULL;
+		subfocus=NULL;
+		headselect=NULL;
+		ytemp=0;
+	}
+	else if ((keys & KEY_A)&&mainfocus!=NULL && headselect==NULL)
+	{
+		headselect=mainfocus;
+	}
+	else if (keys & KEY_DOWN)
+	{
+		ytemp=padHandleDown(ytemp);
+	}
+	else if (keys & KEY_UP)
+	{
+		ytemp=padHandleUP(ytemp);
+	}
+	else
+	{
+		if(i==0 && (screen.py!=0||screen.px!=0))
 		{
-				headselect=mainfocus;
+			first=screen.py + hold;
+			i=1;
+			holdcount++;
+			tapx=screen.px;
+			tapy=screen.py;
 		}
-		else
+		else if (i==1 && ((abs(screen.py-tapy))<5)&& ((abs(screen.px-tapx))<5))
 		{
-			if(i==0 && (screen.py!=0||screen.px!=0))
-			{
-				first=screen.py + hold;
-				i=1;
-				holdcount++;
-				tapx=screen.px;
-				tapy=screen.py;
-			}
-			else if (i==1 && ((abs(screen.py-tapy))<5)&& ((abs(screen.px-tapx))<5))
-			{
-				holdcount++;
-			}
-			else if (screen.py!=0 || screen.px!=0)
-			{
-				holdcount=0;
-			}
-			ytemp=-screen.py+first;
+			holdcount++;
+		}
+		else if (screen.py!=0 || screen.px!=0)
+		{
+			holdcount=0;
+		}
+		ytemp=-screen.py+first;
 
-			if(screen.py==0 && screen.px==0)
+		if(screen.py==0 && screen.px==0)
+		{
+			ytemp=hold;
+			if(i==1)
 			{
-				ytemp=hold;
-				if(i==1)
+				if(holdcount<20 && holdcount>0)
 				{
-					if(holdcount<20 && holdcount>0)
-					{
-						//check if the tap was in bounds, if its a second tap we go into subfolders and reset scroll
-						ytemp=tapFocus(penx,peny,ytemp);
-					}
+					//check if the tap was in bounds, if its a second tap we go into subfolders and reset scroll
+					ytemp=tapFocus(penx,peny,ytemp);
 				}
-				holdcount =0;
-				i=0;
 			}
-			//hold for next iteration
-			penx=screen.px;
-			peny=screen.py;
-		
-			//check bounds while scrolling will just return og value if no hits	
+			holdcount =0;
+			i=0;
 		}
+		//hold for next iteration
+		penx=screen.px;
+		peny=screen.py;
 		
+		//check bounds while scrolling will just return og value if no hits	
 		ytemp=checkBounds(ytemp);
-		
-		
-	}		
+	}
 	hold=ytemp;
     display(ytemp);
-	passflag=1;
-
 }
 
 		
@@ -147,11 +156,13 @@ static void display(s16 i)
 
 	if(headselect!=NULL)
 	{
+		subtranslate=-TOPb_HEIGHT-BOTTOMb_HEIGHT + ((headselect->count)-1)*55.0f;
 		C3D_FVUnifSet(GPU_VERTEX_SHADER, uform_light, 0.0f, 0.5f,  0.0f, 1.0f);
 		subDisplay(i);
 	}
 	else
 	{
+		maxtranslate =-TOPb_HEIGHT-BOTTOMb_HEIGHT + (maincount-1)*55.0f;
 		C3D_FVUnifSet(GPU_VERTEX_SHADER, uform_light, 0.2f, 0.0f,  0.9f, 1.0f);
 		mainDisplay(i);
 	}
@@ -224,97 +235,128 @@ void textSet(float x, float y, char* name)
 
 static s16 checkBounds(s16 ytemp)
 {
-	
-	// if((kinghead->y)<116)
-	// {
-	// 	ytemp=0;
-	// }
-	// else if (((kingtail->y))>-71)
-	// {
-	// 	maxtranslate =-187 + (maincount-1)*55.0;
-	// 	ytemp= maxtranslate;
-	// }
-	
-	if((116.0+ytemp)<116)
+	//ytemp is the the absolute value moved from the initial height, the top most 
+	//button shouldn't go down so ytemp shouldnt be less then 0
+	if((ytemp)<0)
 	{
-		ytemp=0;
+		ytemp=0.0f;
 	}
 	else if (headselect!=NULL)
 	{
-		if((-120.0-((headselect->count)-1)*55.0+236)<-71)
+		//first check if the amount of initial buttons surpasses the bottom boundary if not ytemp should always be zero
+		//if yes check if its gone too far above that bottom boundary
+		if((TOPb_HEIGHT-((headselect->count)-1)*55.0f)<-BOTTOMb_HEIGHT)
 		{
-			subtranslate=-187 + ((headselect->count)-1)*55.0;
+			
 
-			if((-120.0+ytemp-((headselect->count)-1)*55.0+236)>-71)
+			if((TOPb_HEIGHT+ytemp-((headselect->count)-1)*55.0f)>-BOTTOMb_HEIGHT)
 			{
 					ytemp= subtranslate;
 			}
 		}
 		else
 		{
-			ytemp=0;
+			ytemp=0.0f;
 		}
 	}
 	else if (headselect==NULL)
 	{
 			
-		if((-120.0-(maincount-1)*55.0+236)<-71)
+		if((TOPb_HEIGHT-(maincount-1)*55.0f)<BOTTOMb_HEIGHT)
 		{
-			maxtranslate =-187 + (maincount-1)*55.0;
-			if((-120.0+ytemp-(maincount-1)*55.0+236)>-71)
+			
+			if((TOPb_HEIGHT+ytemp-(maincount-1.0f)*55.0f)>-BOTTOMb_HEIGHT)
 			{
-					ytemp= maxtranslate;
+				ytemp= maxtranslate;
 			}
 		}
 		else
 		{
-				ytemp=0;
+			ytemp=0.0f;
 		}
 	}
 	return ytemp;
 }
+//-----------------------Dont need to check bounds for dpad, just dont go next if prev or next is null
+// if the y coord is in range then add to ytemp the difference between its current y value and -71 
+//or in the other case its current y value and 116 need to subtract the difference
+static float padHandleDown(float padset_d)
+{
+	if(headselect!=NULL && subfocus==NULL)
+	{
+		subfocus=headselect->head;
+	}
+	else if(headselect!=NULL)
+	{
+		if(subfocus!=headselect->tail)
+		{
+			subfocus=subfocus->next;
+		}
+		return (padset_d + paddleBounds_d(subfocus->y));
+	}
+	else if(mainfocus!=NULL)
+	{
+		if(mainfocus!=kingtail)
+		{
+			mainfocus=mainfocus->next;
+		}
+		return (padset_d + paddleBounds_d(mainfocus->y));
+	}
+	else
+	{
+		mainfocus=kinghead;
+	}
+	return 0.0f;
+}
 
-// void padHandleDown()
-// {
-// 	if(headselect!=NULL && subfocus==NULL)
-// 	{
-// 		subfocus=headselect->head;
-// 	}
-// 	else if(headselect!=NULL)
-// 	{
-// 		subfocus=subfocus->next;
-// 		paddleBownds();
-// 	}
-// 	else if(mainfocus!=NULL)
-// 	{
-// 		mainfocus=mainfocus->next;
-// 		paddlowBownds();
-// 	}
-// 	else
-// 	{
-// 		mainfocus=kinghead;
-// 	}
-// }
-
-// float paddleBounds_h(float val)
-// {
-// 	if((val)>116)
-// 	{
-// 		return (116-mainfocus->y);
-// 	}
-// 	else
-// 	{
-// 		return 0;
-// 	}
-// }
-// float paddleBounds_l(float val)
-// {
-// 	if((val-55)<)
-// 	{
-// 		return (116-mainfocus->y);
-// 	}
-// 	else
-// 	{
-// 		return 0;
-// 	}
-// }
+static float paddleBounds_d(float val_d)
+{
+	if((val_d)<-BOTTOMb_HEIGHT)
+	{
+		return (-BOTTOMb_HEIGHT-val_d);
+	}
+	else if((val_d+4.0f)>MAX_HEIGHT)
+	{
+		return (TOPb_HEIGHT-val_d);
+	}
+	else
+	{
+		return 0.0f;
+	}
+}
+static float padHandleUP(float padset_u)
+{
+	
+	if(headselect!=NULL)
+	{
+		if(subfocus!=headselect->head)
+		{
+			subfocus=subfocus->prev;
+		}
+		return (padset_u + paddleBounds_u(subfocus->y));
+	}
+	else if(mainfocus!=NULL)
+	{
+		if(mainfocus!=kinghead)
+		{
+			mainfocus=mainfocus->prev;
+		}
+		return (padset_u + paddleBounds_u(mainfocus->y));
+	}
+	return padset_u;
+}
+static float paddleBounds_u(float val_u)
+{
+	if((val_u)>TOPb_HEIGHT)
+	{
+		return (TOPb_HEIGHT-val_u);
+	}
+	else if((val_u-49.0f)<-MAX_HEIGHT)
+	{
+		return (-BOTTOMb_HEIGHT-val_u);
+	}
+	else
+	{
+		return 0.0f;
+	}
+}
