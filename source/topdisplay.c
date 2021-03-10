@@ -4,6 +4,7 @@
 #include "topbuffs.h"
 #include "mainbuffs.h"
 #include "setup.h"
+#define  title_speed 0.05
 typedef struct threevec 
 {
     float x;
@@ -24,6 +25,7 @@ static threevec scaley={1.0f,1.333f,1.0f};
 
 
 
+
 void topSetup()
 {
     dynamicsBuf = C2D_TextBufNew(4096);
@@ -40,11 +42,11 @@ void topscreenrender()
     }
     else if (mainfocus!=NULL)
     {
-
+        drawtext(50,NULL);
     }
     else
     {   
-      drawtext(50,NULL);
+        drawtext(50,NULL);
     }
 }	
 
@@ -72,14 +74,14 @@ void topDraw()
 }
 static void drawtext(u32 textsize,char* text)
 {
+    static float i=0;
     C2D_Text* HelpD3sk=(C2D_Text*)malloc(textsize);
-    
     C2D_TextParse(HelpD3sk,dynamicsBuf,"HelpD3sk");
     C2D_TextOptimize(HelpD3sk);
     C2D_Prepare();
     C2D_TextBufClear(dynamicsBuf);
-    C2D_DrawText(HelpD3sk, C2D_AtBaseline | C2D_WithColor | C2D_AlignCenter, 180,50.0f, 0.5f, 1.75f, 1.75f, C2D_Color32f(0.667f,0.0f,0.667f,1.0f));
+    C2D_DrawText(HelpD3sk, C2D_AtBaseline | C2D_WithColor | C2D_AlignCenter, 200.0f,80.0f + 10*sin(i), 0.5f, 1.75f, 1.75f, C2D_Color32f(0.0f,0.0f,0.0f,1.0f));
     C2D_Flush();
-    
+    i+=0.02;
     free(HelpD3sk);
 }

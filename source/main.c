@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
 	C2D_Init(C2D_DEFAULT_MAX_OBJECTS);
 
 	touchPosition screen; 
-	
+
 	C3D_RenderTarget* top = C3D_RenderTargetCreate(240, 400, GPU_RB_RGBA8, GPU_RB_DEPTH24_STENCIL8);
 	C3D_RenderTargetSetOutput(top, GFX_TOP, GFX_LEFT, DISPLAY_TRANSFER_FLAGS);
 
@@ -38,9 +38,7 @@ int main(int argc, char* argv[])
 		{
 			break; 
 		}
-			
 		hidTouchRead(&screen);
-
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 			C3D_RenderTargetClear(bot, C3D_CLEAR_ALL, CLEAR_COLOR, 0);
 			C3D_FrameDrawOn(bot);
@@ -49,9 +47,10 @@ int main(int argc, char* argv[])
 			C3D_FrameDrawOn(top);
 			C2D_SceneTarget(top);
 			topscreenrender();
+
 		C3D_FrameEnd(0);
 	}
-
+	
 	sceneExit();
 	C3D_Fini();
 	gfxExit();

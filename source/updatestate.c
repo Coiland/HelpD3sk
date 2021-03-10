@@ -25,17 +25,22 @@ static u16 tapy=0;
 static u8 i=0;
 static u8 holdcount=0;
 static float ytemp=0;
+static u8 keysdelay=0;
 
 static float maxtranslate =0;
 static float subtranslate =0;
 headfolders *mainfocus=NULL;
 folders *subfocus=NULL;
 headfolders *headselect=NULL;
+
 	
 
 void updateState(u32 keys, touchPosition screen)	//printf("\x1b[14;10H Focus text is  %d", i);
 {
-	
+	if (keys!=0)
+	{
+		i=0;
+	}
 	if(keys & KEY_B)
 	{
 		mainfocus=NULL;
@@ -46,6 +51,7 @@ void updateState(u32 keys, touchPosition screen)	//printf("\x1b[14;10H Focus tex
 	else if ((keys & KEY_A)&&mainfocus!=NULL && headselect==NULL)
 	{
 		headselect=mainfocus;
+		ytemp=0;
 	}
 	else if (keys & KEY_DOWN)
 	{
@@ -55,7 +61,7 @@ void updateState(u32 keys, touchPosition screen)	//printf("\x1b[14;10H Focus tex
 	{
 		ytemp=padHandleUP(ytemp);
 	}
-	else
+	else 
 	{
 		if(i==0 && (screen.py!=0||screen.px!=0))
 		{
