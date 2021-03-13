@@ -6,9 +6,9 @@
 #include "headers.h"
 #include "setup.h"
 
-headfolders* kinghead=NULL; 
-headfolders* kingtail=NULL;
-u8 maincount=0;
+headfolders *kinghead = NULL;
+headfolders *kingtail = NULL;
+u8 maincount = 0;
 
 /*!
  * @param       name     Name to be displayed on the button
@@ -18,61 +18,60 @@ u8 maincount=0;
  *                      to be connected to. Pass NULL if you want to create a new head
  * @result              A pointer to new button 
 */
-void addfolder(char* text,char * name, char* headname) 
- {
-    headfolders *temp=kinghead;
-    while(strcmp(headname,temp->name)!=0)
+void addfolder(char *text, char *name, char *headname)
+{
+    headfolders *temp = kinghead;
+    while (strcmp(headname, temp->name) != 0)
     {
-        temp=temp->next;
-        if(temp==NULL)
+        temp = temp->next;
+        if (temp == NULL)
         {
             return;
-        }   
+        }
     }
     (temp->count)++;
 
-    folders* new=(folders*)malloc(sizeof(folders));
-    if(new==NULL)
+    folders *new = (folders *)malloc(sizeof(folders));
+    if (new == NULL)
     {
         return;
     }
-    if (temp->head==NULL)
+    if (temp->head == NULL)
     {
-        temp->head=new;
+        temp->head = new;
     }
     else
     {
-        temp->tail->next=new;
+        temp->tail->next = new;
     }
-    new->prev=temp->tail;
-    temp->tail=new;
-    new->name=name;
-    new->next=NULL;
-    new->text=text;
- }
+    new->prev = temp->tail;
+    temp->tail = new;
+    new->name = name;
+    new->next = NULL;
+    new->text = text;
+}
 
- void addfolderhead(char* name)
- {
-    headfolders* new=(headfolders*)malloc(sizeof(headfolders));
+void addfolderhead(char *name)
+{
+    headfolders *new = (headfolders *)malloc(sizeof(headfolders));
 
-    if(new==NULL)
+    if (new == NULL)
     {
         return;
     }
-    if (kinghead==NULL)
+    if (kinghead == NULL)
     {
-        kinghead=new;
+        kinghead = new;
     }
     else
     {
-        kingtail->next = new;  
+        kingtail->next = new;
     }
-    new->prev=kingtail;
-    new->name=name;
-    new->next=NULL;
-    new->head=NULL;
-    new->tail=NULL;
-    kingtail=new;
+    new->prev = kingtail;
+    new->name = name;
+    new->next = NULL;
+    new->head = NULL;
+    new->tail = NULL;
+    kingtail = new;
     maincount++;
- }
- 
+}
