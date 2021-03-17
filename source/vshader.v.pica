@@ -13,31 +13,34 @@
 ; Outputs
 .out outpos position
 .out outclr color
+.out outtex texcoord1
 
 ; Inputs (defined as aliases for convenience)
 .alias inpos v0
-.alias inclr v1
+;both colour at texture are passed through second attribute configured with texenv
+.alias inclrtex v1
+;.alias intex v2
 
 .proc main
 	; Force the w component of inpos to be 1.0
 	mov r0.xyz, inpos
 	mov r0.w,   ones
-	; outpos = projectionMatrix * inpos
+
+	
+	mov outtex,inclrtex
+
 	dp4 r1.x, MV[0], r0
 	dp4 r1.y, MV[1], r0
 	dp4 r1.z, MV[2], r0
 	dp4 r1.w, MV[3], r0
-	; outpos = projectionMatrix * inpos
+
 	dp4 outpos.x, P[0], r1
 	dp4 outpos.y, P[1], r1
 	dp4 outpos.z, P[2], r1
 	dp4 outpos.w, P[3], r1
 
-	; outclr = inclr
 	mov r3, L
-	mov r4, inclr
+	mov r4, inclrtex
 	mad outclr,r3,S,r4
-
-	; We're finished
 	end
 .end

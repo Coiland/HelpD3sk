@@ -12,9 +12,9 @@ typedef struct threevec
     float y;
     float z;
 } threevec;
-static void topSetMV(threevec *, threevec* ,threevec*, threevec *,u16);
+static void topSetMV(threevec *, threevec *, threevec *, threevec *, u16);
 static void topDraw(float);
-static void drawtext(u32 textsize, char *,float);
+static void drawtext(u32 textsize, char *, float);
 
 C2D_TextBuf dynamicsBuf;
 
@@ -39,31 +39,31 @@ void topscreenrender()
     }
     else if (mainfocus != NULL)
     {
-        drawtext(50, NULL,i);
+        drawtext(50, NULL, i);
     }
     else
     {
-        drawtext(50, NULL,i);
+        drawtext(50, NULL, i);
     }
     i += 0.02;
 }
 
-void topSetMV(threevec *scale, threevec *angle,threevec *axis, threevec *translate, u16 numvertices)
+void topSetMV(threevec *scale, threevec *angle, threevec *axis, threevec *translate, u16 numvertices)
 {
     Mtx_Identity(&MV);
-    if(axis->z)
+    if (axis->z)
     {
         Mtx_RotateZ(&MV, angle->z, false);
     }
-    if(axis->y)
+    if (axis->y)
     {
-        Mtx_RotateY(&MV, angle->y, false);  
+        Mtx_RotateY(&MV, angle->y, false);
     }
-    if(axis->x)
+    if (axis->x)
     {
-         Mtx_RotateX(&MV, angle->x, false);  
+        Mtx_RotateX(&MV, angle->x, false);
     }
-    
+
     Mtx_Scale(&MV, scale->x, scale->y, scale->z);
     Mtx_Translate(&MV, translate->x, translate->y, translate->z, false);
     C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_modelview, &MV);
@@ -72,36 +72,35 @@ void topSetMV(threevec *scale, threevec *angle,threevec *axis, threevec *transla
 }
 void topDraw(float i)
 {
-    threevec angle = {0.0f,0.0f,0.0f};
-    threevec axis = {0.0f,0.0f,0.0f};
-    setBuffs(&canvasInfo, &attrInfo, 0.0f);
+    threevec angle = {0.0f, 0.0f, 0.0f};
+    threevec axis = {0.0f, 0.0f, 0.0f};
+    setBuffs(&canvasInfo, &attrInfo, 0,0);
     sectrans.x *= -1;
-    topSetMV(&startscale, &angle,&axis, &sectrans,canvas_size/VERTEX_SIZE);
+    topSetMV(&startscale, &angle, &axis, &sectrans, canvas_size / VERTEX_SIZE);
     sectrans.x *= -1;
-    topSetMV(&startscale,&angle,&axis, &sectrans,canvas_size/VERTEX_SIZE);
-    angle.z=M_PI/2;
-    axis.z=1.0f;
+    topSetMV(&startscale, &angle, &axis, &sectrans, canvas_size / VERTEX_SIZE);
+    angle.z = M_PI / 2;
+    axis.z = 1.0f;
     firstrans.y *= -1;
-    topSetMV(&scaley, &angle,&axis,&firstrans,canvas_size/VERTEX_SIZE);
+    topSetMV(&scaley, &angle, &axis, &firstrans, canvas_size / VERTEX_SIZE);
     firstrans.y *= -1;
-    topSetMV(&scaley,&angle,&axis,&firstrans,canvas_size/VERTEX_SIZE);
-    setBuffs(&tableInfo, &attrInfo, 0.0f);
-    angle.z=0.0f;
-    axis.z=0.0f;
+    topSetMV(&scaley, &angle, &axis, &firstrans, canvas_size / VERTEX_SIZE);
+    angle.z = 0.0f;
+    axis.z = 0.0f;
 
-    angle.x=C3D_AngleFromDegrees(-30.0f);
-    axis.x=1.0f;
+    angle.x = C3D_AngleFromDegrees(-30.0f);
+    axis.x = 1.0f;
 
-    angle.y=i;
-    axis.y=1.0f;
-    topSetMV(&startscale,&angle,&axis,&tabletrans,maintable_size/VERTEX_SIZE);
-    
-
+    angle.y = i;
+    axis.y = 1.0f;
+    setBuffs(&legsInfo, &attrInfo, 0,0);
+    topSetMV(&startscale, &angle, &axis, &tabletrans, helplegs_size / VERTEX_SIZE);
+    setBuffs(&tableInfo, &attrInfo, 0,1);
+    topSetMV(&startscale, &angle, &axis, &tabletrans, maintable_size / VERTEX_SIZE);
 }
-static void drawtext(u32 textsize, char *text,float i)
+static void drawtext(u32 textsize, char *text, float i)
 {
-    
-    
+
     C2D_Text *HelpD3sk = (C2D_Text *)malloc(textsize);
     C2D_TextParse(HelpD3sk, dynamicsBuf, "HelpD3sk");
     C2D_TextOptimize(HelpD3sk);
@@ -109,6 +108,6 @@ static void drawtext(u32 textsize, char *text,float i)
     C2D_TextBufClear(dynamicsBuf);
     C2D_DrawText(HelpD3sk, C2D_AtBaseline | C2D_WithColor | C2D_AlignCenter, 200.0f, 60.0f + 10 * sin(i), 0.5f, 1.75f, 1.75f, C2D_Color32f(0.0f, 0.0f, 0.0f, 1.0f));
     C2D_Flush();
-    
+
     free(HelpD3sk);
 }
