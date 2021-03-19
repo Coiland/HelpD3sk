@@ -13,7 +13,7 @@ void subDisplay(s16 i)
 
 	while (temp != NULL)
 	{
-		setBuffs(&buttonInfo, &attrInfo, 1,0);
+		setBuffs(&buttonInfo, &attrInfo, 1, 0);
 		Mtx_Identity(&MV);
 		Mtx_Translate(&MV, -150.0f, -120.0f - y * 55.0 + i, 0.0f, true);
 

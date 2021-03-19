@@ -179,14 +179,14 @@ void sliderout(s16 i)
 	{
 		t = i / (maxtranslate);
 	}
-	setBuffs(&sliderInfo, &attrInfo, 1,0);
+	setBuffs(&sliderInfo, &attrInfo, 1, 0);
 	Mtx_Identity(&MV);
 	Mtx_Translate(&MV, -160.0f, -120.0f - t * 150.0f, 0.0f, true);
 	C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_modelview, &MV);
 	C3D_FVUnifSet(GPU_VERTEX_SHADER, uform_selectset, 0.0f, 0.0f, 0.0f, 0.0f);
 	C3D_DrawArrays(GPU_TRIANGLES, 0, 12);
 
-	setBuffs(&limitInfo, &attrInfo, 1,0);
+	setBuffs(&limitInfo, &attrInfo, 1, 0);
 	Mtx_Identity(&MV);
 	Mtx_Translate(&MV, -160.0f, -120.0f, 0.0f, true);
 	C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_modelview, &MV);
@@ -204,25 +204,24 @@ void setBuffs(C3D_BufInfo *vbo, C3D_AttrInfo *attributes, u8 projflag, u8 textur
 	}
 	else
 	{
-		Mtx_PerspTilt(&P, C3D_AngleFromDegrees(90.0f), 320.0f / 240.0f, 0.01f, 1000.0f, true);
+		Mtx_PerspTilt(&P, C3D_AngleFromDegrees(90.0f), 400.0f / 240.0f, 0.01f, 1000.0f, true);
 	}
 	C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_projection, &P);
-	
-	if(textureflag)
+
+	if (textureflag)
 	{
 		C3D_TexEnv *env = C3D_GetTexEnv(1);
 		C3D_TexEnvInit(env);
-		C3D_TexEnvSrc(env, C3D_Both, GPU_TEXTURE1,0, 0);
-		C3D_TexEnvFunc(env, C3D_Both, GPU_REPLACE);
-	}	
-	else
-	{
-		C3D_TexEnv *env = C3D_GetTexEnv(0);
-		C3D_TexEnvInit(env);
-		C3D_TexEnvSrc(env, C3D_Both, GPU_PRIMARY_COLOR,0, 0);
+		C3D_TexEnvSrc(env, C3D_Both, GPU_TEXTURE1, 0, 0);
 		C3D_TexEnvFunc(env, C3D_Both, GPU_REPLACE);
 	}
-
+	else
+	{
+		C3D_TexEnv *env = C3D_GetTexEnv(1);
+		C3D_TexEnvInit(env);
+		C3D_TexEnvSrc(env, C3D_Both, GPU_PRIMARY_COLOR, 0, 0);
+		C3D_TexEnvFunc(env, C3D_Both, GPU_REPLACE);
+	}
 }
 
 void textSet(float x, float y, char *name)

@@ -7,18 +7,17 @@
 #include "darkwood_t3x.h"
 
 #define vertex_list_count (sizeof(vertex_list) / sizeof(vertex_list[0]))
-static bool loadTextureFromMem(C3D_Tex*, C3D_TexCube*, const void* , size_t);
+static bool loadTextureFromMem(C3D_Tex *, C3D_TexCube *, const void *, size_t);
 
 static DVLB_s *vshader_dvlb;
 shaderProgram_s program;
 int uLoc_projection, uLoc_modelview, uform_selectset, uform_light;
 C3D_Mtx MV;
 C3D_Mtx P;
-C3D_BufInfo buttonInfo, sliderInfo, limitInfo, backInfo, canvasInfo, tableInfo,legsInfo;
+C3D_BufInfo buttonInfo, sliderInfo, limitInfo, backInfo, canvasInfo, tableInfo, legsInfo;
 C3D_AttrInfo attrInfo;
 
-static void *BUTTON_DATA,*SLIDER_DATA,*LIMIT_DATA,*TABLEBACK_DATA,*CANVAS_DATA,*TABLE_DATA,*LEGS_DATA;
-
+static void *BUTTON_DATA, *SLIDER_DATA, *LIMIT_DATA, *TABLEBACK_DATA, *CANVAS_DATA, *TABLE_DATA, *LEGS_DATA;
 
 C2D_TextBuf nameBuf;
 
@@ -59,7 +58,7 @@ void createFolders()
 	addfolder("hey", "mom", "second");
 	addfolder("hey", "mom", "third");
 }
-static bool loadTextureFromMem(C3D_Tex* tex, C3D_TexCube* cube, const void* data, size_t size)
+static bool loadTextureFromMem(C3D_Tex *tex, C3D_TexCube *cube, const void *data, size_t size)
 {
 	Tex3DS_Texture t3x = Tex3DS_TextureImport(data, size, tex, cube, false);
 	if (!t3x)
