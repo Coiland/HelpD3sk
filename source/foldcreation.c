@@ -18,7 +18,7 @@ u8 maincount = 0;
  *                      to be connected to. Pass NULL if you want to create a new head
  * @result              A pointer to new button 
 */
-void addfolder(char *text, char *name, char *headname)
+void addfolder(char *name, char *headname)
 {
     headfolders *temp = kinghead;
     while (strcmp(headname, temp->name) != 0)
@@ -48,10 +48,10 @@ void addfolder(char *text, char *name, char *headname)
     temp->tail = new;
     new->name = name;
     new->next = NULL;
-    new->text = text;
+    //new->text = text;
 }
 
-void addfolderhead(char *name)
+void addfolderhead(char *name,char *description)
 {
     headfolders *new = (headfolders *)malloc(sizeof(headfolders));
 
@@ -68,6 +68,7 @@ void addfolderhead(char *name)
         kingtail->next = new;
     }
     new->prev = kingtail;
+    new->text = description;
     new->name = name;
     new->next = NULL;
     new->head = NULL;

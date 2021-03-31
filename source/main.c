@@ -5,6 +5,7 @@
 #include "setup.h"
 #include "updatestate.h"
 #include "topdisplay.h"
+#include "textbuffs.h"
 
 #define CLEAR_COLOR 0x505060FF
 #define DISPLAY_TRANSFER_FLAGS                                                                     \

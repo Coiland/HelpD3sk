@@ -19,10 +19,6 @@ C3D_AttrInfo attrInfo;
 
 static void *BUTTON_DATA, *SLIDER_DATA, *LIMIT_DATA, *TABLEBACK_DATA, *CANVAS_DATA, *TABLE_DATA, *LEGS_DATA;
 
-C2D_TextBuf nameBuf;
-
-C2D_TextBuf mainnameBuf;
-C2D_Text *mainName_p;
 
 static C3D_Tex table_tex;
 
@@ -31,40 +27,12 @@ u16 buttonheight = 45;
 u32 mainsize = 100;
 u32 subsize = 400;
 
-void createFolders()
-{
-	//mainnameBuf = C2D_TextBufNew(4096);
-	nameBuf = C2D_TextBufNew(4096);
 
-	//mainName_p=(C2D_Text*)malloc(4096);
-
-	//dont put anything in focus initially
-	addfolderhead("this is the ");
-
-	addfolderhead("second");
-	addfolderhead("third");
-
-	addfolderhead("fourth");
-	addfolderhead("fifth");
-	addfolderhead("six");
-	addfolderhead("seven");
-	//focus=kinghead->next;
-	addfolder("sup", "mombo", "second");
-	addfolder("hey", "mom", "second");
-	addfolder("hey", "mom", "second");
-	addfolder("hey", "mom", "second");
-	addfolder("hey", "mom", "second");
-	addfolder("hey", "mom", "second");
-	addfolder("hey", "mom", "second");
-	addfolder("hey", "mom", "third");
-}
 static bool loadTextureFromMem(C3D_Tex *tex, C3D_TexCube *cube, const void *data, size_t size)
 {
 	Tex3DS_Texture t3x = Tex3DS_TextureImport(data, size, tex, cube, false);
 	if (!t3x)
 		return false;
-
-	// Delete the t3x object since we don't need it
 	Tex3DS_TextureFree(t3x);
 	return true;
 }

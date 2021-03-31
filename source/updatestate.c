@@ -3,6 +3,7 @@
 #include "subfolder.h"
 #include "mainfolder.h"
 #include "foldcreation.h"
+#include "textbuffs.h"
 
 #define TOPb_HEIGHT (116.0f)
 #define BOTTOMb_HEIGHT (71.0f)

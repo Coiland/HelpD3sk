@@ -15,6 +15,5 @@ extern C3D_Mtx MV, P;
 extern shaderProgram_s program;
 extern C3D_BufInfo buttonInfo, sliderInfo, limitInfo, backInfo, canvasInfo, tableInfo, legsInfo;
 extern C3D_AttrInfo attrInfo;
-extern C2D_TextBuf nameBuf;
 extern u16 buttonwidth, buttonheight;
 #endif

@@ -7,6 +7,7 @@
 
 #define VERTEX_SIZE (sizeof(vertex))
 #define ANIMATION_RATE (0.02f)
+
 static char default_text[]=
 {
     "Use analog stick or touchpad to scroll"
@@ -19,6 +20,7 @@ typedef struct threevec
 } threevec;
 static void topSetMV(threevec *, threevec *, threevec *, threevec *, u16);
 static void topDraw(float);
+static void drawCanvas();
 static void drawtext(u32 textsize, char *, float);
 
 C2D_TextBuf dynamicsBuf;
@@ -38,7 +40,7 @@ void topscreenrender()
 {
     static float i = 0;
    
-
+    drawCanvas();
     if (subfocus != NULL)
     {
     }
@@ -50,9 +52,9 @@ void topscreenrender()
     }
     else
     {
-        
-        drawtext(sizeof(default_text)/sizeof(char), default_text, i);
         topDraw(i);
+        drawtext(sizeof(default_text)/sizeof(char), default_text, i);
+        
         
     }
     i += ANIMATION_RATE;
@@ -84,17 +86,6 @@ void topDraw(float i)
 {
     threevec angle = {0.0f, 0.0f, 0.0f};
     threevec axis = {0.0f, 0.0f, 0.0f};
-    setBuffs(&canvasInfo, &attrInfo, 0, 0);
-    sectrans.x *= -1;
-    topSetMV(&startscale, &angle, &axis, &sectrans, canvas_size / VERTEX_SIZE);
-    sectrans.x *= -1;
-    topSetMV(&startscale, &angle, &axis, &sectrans, canvas_size / VERTEX_SIZE);
-    angle.z = M_PI / 2;
-    axis.z = 1.0f;
-    firstrans.y *= -1;
-    topSetMV(&scaley, &angle, &axis, &firstrans, canvas_size / VERTEX_SIZE);
-    firstrans.y *= -1;
-    topSetMV(&scaley, &angle, &axis, &firstrans, canvas_size / VERTEX_SIZE);
     angle.z = 0.0f;
     axis.z = 0.0f;
     angle.x = C3D_AngleFromDegrees(-30.0f);
@@ -128,4 +119,20 @@ static void drawtext(u32 textsize, char text[], float i)
     C2D_DrawText(hint_text, C2D_AtBaseline | C2D_WithColor | C2D_AlignCenter | C2D_WordWrap , 200.0f, 222, 0.5f, 0.60f, 0.60f, C2D_Color32f(0.0f, 0.0f, 0.0f, 1.0f),380.0f);
     C2D_Flush();
     free(hint_text);
+}
+static void drawCanvas()
+{
+    threevec angle = {0.0f, 0.0f, 0.0f};
+    threevec axis = {0.0f, 0.0f, 0.0f};
+    setBuffs(&canvasInfo, &attrInfo, 0, 0);
+    sectrans.x *= -1;
+    topSetMV(&startscale, &angle, &axis, &sectrans, canvas_size / VERTEX_SIZE);
+    sectrans.x *= -1;
+    topSetMV(&startscale, &angle, &axis, &sectrans, canvas_size / VERTEX_SIZE);
+    angle.z = M_PI / 2;
+    axis.z = 1.0f;
+    firstrans.y *= -1;
+    topSetMV(&scaley, &angle, &axis, &firstrans, canvas_size / VERTEX_SIZE);
+    firstrans.y *= -1;
+    topSetMV(&scaley, &angle, &axis, &firstrans, canvas_size / VERTEX_SIZE);
 }

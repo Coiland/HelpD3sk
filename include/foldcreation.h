@@ -10,6 +10,7 @@ typedef struct folders folders;
 struct headfolders
 {
     char *name;
+    char *text;
     float x, y;
     headfolders *next;
     headfolders *prev;
@@ -22,12 +23,12 @@ struct folders
     float x, y;
     folders *next;
     folders *prev;
-    char *text;
+    //char *text;
     char *name;
 };
 extern headfolders *kinghead;
 extern headfolders *kingtail;
-void addfolderhead(char *);
-void addfolder(char *text, char *name, char *headname);
+void addfolderhead(char *,char*);
+void addfolder(char *name, char *headname);
 extern u8 maincount;
 #endif
