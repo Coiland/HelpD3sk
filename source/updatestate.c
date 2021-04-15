@@ -227,21 +227,16 @@ void setBuffs(C3D_BufInfo *vbo, C3D_AttrInfo *attributes, u8 projflag, u8 textur
 
 void textSet(float x, float y, char *name)
 {
-	C2D_Text *Name_p = (C2D_Text *)malloc(100);
-	if (Name_p == NULL)
-	{
-		return;
-	}
+	C2D_Text Name_p;
 	float left = (x + 160.0f) * (400.0f / 320.0f);
 	float top = 240.0f - (y + 120.0f);
-	C2D_TextParse(Name_p, nameBuf, name);
-	C2D_TextOptimize(Name_p);
+	C2D_TextParse(&Name_p, nameBuf, name);
+	C2D_TextOptimize(&Name_p);
 
 	C2D_Prepare();
 	C2D_TextBufClear(nameBuf);
-	C2D_DrawText(Name_p, C2D_AtBaseline | C2D_WithColor | C2D_AlignCenter | C2D_WordWrap, left + (buttonwidth / 2) * 400.0f / 320.0f, top + buttonheight / 2 + 10.0f, 0.2f, 1.2f, 1.1f, C2D_Color32f(0.0f, 0.0f, 0.0f, 1.0f), 200.0f);
+	C2D_DrawText(&Name_p, C2D_AtBaseline | C2D_WithColor | C2D_AlignCenter | C2D_WordWrap, left + (buttonwidth / 2) * 400.0f / 320.0f, top + buttonheight / 2 + 10.0f, 0.2f, 1.2f, 1.1f, C2D_Color32f(0.0f, 0.0f, 0.0f, 1.0f), 200.0f);
 	C2D_Flush();
-	free(Name_p);
 }
 
 static s16 checkBounds(s16 ytemp)

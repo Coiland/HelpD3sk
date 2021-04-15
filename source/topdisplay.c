@@ -23,17 +23,21 @@ static void topDraw(float);
 static void drawCanvas();
 static void drawtext(u32 textsize, char *, float);
 
-C2D_TextBuf dynamicsBuf;
+C2D_TextBuf dynamicsBuf,staticBuf;
 
 static threevec startscale = {1.0f, 1.0f, 1.0f};
 static threevec firstrans = {0.0f, 115.0f, 0.0f};
 static threevec sectrans = {195.0f, 0.0f, 0.0f};
 static threevec scaley = {1.0f, 1.667f, 1.0f};
 static threevec tabletrans = {0.0f, 30.0f, 170.0f};
+static C2D_Text HelpD3sk;
 
 void topSetup()
 {
     dynamicsBuf = C2D_TextBufNew(4096);
+    staticBuf = C2D_TextBufNew(9);
+    C2D_TextParse(&HelpD3sk, staticBuf, "HelpD3sk");
+    C2D_TextOptimize(&HelpD3sk);
 }
 
 void topscreenrender()
@@ -75,7 +79,7 @@ void topSetMV(threevec *scale, threevec *angle, threevec *axis, threevec *transl
     {
         Mtx_RotateX(&MV, angle->x, false);
     }
-
+    
     Mtx_Scale(&MV, scale->x, scale->y, scale->z);
     Mtx_Translate(&MV, translate->x, translate->y, translate->z, false);
     C3D_FVUnifMtx4x4(GPU_VERTEX_SHADER, uLoc_modelview, &MV);
@@ -99,26 +103,15 @@ void topDraw(float i)
 }
 static void drawtext(u32 textsize, char text[], float i)
 {
-    C2D_Text *HelpD3sk = (C2D_Text *)malloc(8+5);
-    C2D_Text *hint_text = (C2D_Text *)malloc(textsize+5);
-    if(HelpD3sk==NULL || hint_text ==NULL)
-    {
-        return;
-    }
-    C2D_TextParse(HelpD3sk, dynamicsBuf, "HelpD3sk");
-    C2D_TextOptimize(HelpD3sk);
+    C2D_Text hint_text;
     C2D_Prepare();
+    C2D_DrawText(&HelpD3sk, C2D_AtBaseline | C2D_WithColor | C2D_AlignCenter, 200.0f, 60.0f + 10 * sin(i), 0.5f, 1.75f, 1.75f, C2D_Color32f(0.0f, 0.0f, 0.0f, 1.0f));
+    
     C2D_TextBufClear(dynamicsBuf);
-    C2D_DrawText(HelpD3sk, C2D_AtBaseline | C2D_WithColor | C2D_AlignCenter, 200.0f, 60.0f + 10 * sin(i), 0.5f, 1.75f, 1.75f, C2D_Color32f(0.0f, 0.0f, 0.0f, 1.0f));
+    C2D_TextParse(&hint_text, dynamicsBuf, text);
+    C2D_TextOptimize(&hint_text);
+    C2D_DrawText(&hint_text, C2D_AtBaseline | C2D_WithColor | C2D_AlignCenter | C2D_WordWrap , 200.0f, 222, 0.5f, 0.60f, 0.60f, C2D_Color32f(0.0f, 0.0f, 0.0f, 1.0f),380.0f);
     C2D_Flush();
-    free(HelpD3sk);
-    C2D_TextParse(hint_text, dynamicsBuf, text);
-    C2D_TextOptimize(hint_text);
-    C2D_Prepare();
-    C2D_TextBufClear(dynamicsBuf);
-    C2D_DrawText(hint_text, C2D_AtBaseline | C2D_WithColor | C2D_AlignCenter | C2D_WordWrap , 200.0f, 222, 0.5f, 0.60f, 0.60f, C2D_Color32f(0.0f, 0.0f, 0.0f, 1.0f),380.0f);
-    C2D_Flush();
-    free(hint_text);
 }
 static void drawCanvas()
 {

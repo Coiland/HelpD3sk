@@ -53,6 +53,7 @@ int main(int argc, char *argv[])
 	}
 
 	sceneExit();
+	C2D_Fini();
 	C3D_Fini();
 	gfxExit();
 	return 0;
