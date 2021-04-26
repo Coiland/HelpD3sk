@@ -2,64 +2,69 @@
 #include "foldcreation.h"
 C2D_TextBuf nameBuf;
 
-typedef struct name_text
-{
-    char* name;
-    char* text;
-}name_text;
-
-name_text the_head_array[]=
+main_struct the_head_array[]=
 {
     {"this is the ", "does things"},
-    {"second","does things"},
-    {"third","does things"},
-    {"fourth","does things"},
+    {"second","does things2"},
+    {"third","does things3"},
+    {"fourth","does things4"},
     {"fifth","does things"},
     {"six","does things"},
     {"seven","does things"},
 };
 
-name_text the_sub_array[]=
+sub_struct the_sub_array[]=
 {
-    {"mombo", "second"},
-    {"mom", "second"},
-    {"mom", "second"},
-    {"mom", "second"},
-    {"mom", "second"},
-    {"mom", "second"},
-    {"mom", "second"},
-    {"mom", "third"}
+    {"mombo", "second","The history of the 3ds is "},
+    {"mom", "second", "The place you want to be, is here, this is an experience not a a show, "
+    "this is meant for people like you and menow i dont want to put any predjucide on you or "
+    "anyone for that matter but this experience has lead me to unimaginable circumsstances which "
+    "I could not fathom, thiss is life changing I am no longer a man of god but a man of many words "
+     "a preservation this is history in the making  we are the people of god, worship, love , live... you "
+     "only have one life"
+      "this is meant for people like you and menow i dont want to put any predjucide on you or "
+    "anyone for that   matter but this experience has lead me to unimaginable circumsstances which "
+    "I could not fathom, thiss is life changing I am no longer a man of god but a man of many words "
+     "a preservation this is history in the making  we are the people of god, worship, love , live... you "
+     "only have one life"
+     "The place you want to be, is here, this is an experience not a a show, "
+    "this is meant for people like you and menow i dont want to put any predjucide on you or "
+    "anyone for that matter but this experience has lead me to unimaginable circumsstances which "
+    "I could not fathom, thiss is life changing I am no longer a man of god but a man of many words "
+     "a preservation this is history in the making  we are the people of god, worship, love , live... you "
+     "only have one life"
+      "this is meant for people like you and menow i dont want to put any predjucide on you or "
+    "anyone for that   matter but this experience has lead me to unimaginable circumsstances which "
+    "I could not fathom, thiss is life changing I am no longer a man of god but a man of many words "
+     "a preservation this is history in the making  we are the people of god, worship, love , live... you "
+     "only have one life"
+     "The place you want to be, is here, this is an experience not a a show, "
+    "this is meant for people like you and menow i dont want to put any predjucide on you or "
+    "anyone for that matter but this experience has lead me to unimaginable circumsstances which "
+    "I could not fathom, thiss is life changing I am no longer a man of god but a man of many words "
+     "a preservation this is history in the making  we are the people of god, worship, love , live... you "
+     "only have one life"
+      "this is meant for people like you and menow i dont want to put any predjucide on you or "
+    "anyone for that   matter but this experience has lead me to unimaginable circumsstances which "
+    "I could not fathom, thiss is life changing I am no longer a man of god but a man of many words "
+     "a preservation this is history in the making  we are the people of god, worship, love , live... you "
+     "only have one life"},
+    {"mom", "second", "The place you want to be"},
+    {"mom", "second", "The place you want to be"},
+    {"mom", "second", "The place you want to be"},
+    {"mom", "second", "The place you want to be"},
+    {"mom", "second", "The place you want to be"},
+    {"mom", "third", "The place you want to be in the third column"}
 };
 void createFolders()
 {
-	nameBuf = C2D_TextBufNew(4096);
+	nameBuf = C2D_TextBufNew(50);
     for(u8 i=0; i<((sizeof(the_head_array))/sizeof(the_head_array[0]));i++)
     {
         addfolderhead(the_head_array[i].name,the_head_array[i].text);
     }
     for(u8 i=0; i<((sizeof(the_sub_array))/sizeof(the_sub_array[0]));i++)
     {
-        addfolder(the_sub_array[i].name,the_sub_array[i].text);
+        addfolder(the_sub_array[i].name,the_sub_array[i].head,the_sub_array[i].text);
     }
 }
-// void createFolders()
-// {
-// 	nameBuf = C2D_TextBufNew(4096);
-
-// 	addfolderhead("this is the ", "does things");
-// 	addfolderhead("second","does things");
-// 	addfolderhead("third","does things");
-// 	addfolderhead("fourth","does things");
-// 	addfolderhead("fifth","does things");
-// 	addfolderhead("six","does things");
-// 	addfolderhead("seven","does things");
-	
-// 	addfolder("mombo", "second");
-// 	addfolder("mom", "second");
-// 	addfolder("mom", "second");
-// 	addfolder("mom", "second");
-// 	addfolder("mom", "second");
-// 	addfolder("mom", "second");
-// 	addfolder("mom", "second");
-// 	addfolder("mom", "third");
-// }

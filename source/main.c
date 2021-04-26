@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 		C3D_RenderTargetClear(top, C3D_CLEAR_ALL, CLEAR_COLOR, 0);
 		C3D_FrameDrawOn(top);
 		C2D_SceneTarget(top);
-		topscreenrender();
+		topscreenrender(kDown);
 
 		C3D_FrameEnd(0);
 	}

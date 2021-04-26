@@ -50,6 +50,8 @@ void updateState(u32 keys, touchPosition screen) //printf("\x1b[14;10H Focus tex
 	else if ((keys & KEY_A) && mainfocus != NULL && headselect == NULL)
 	{
 		headselect = mainfocus;
+		subfocus=headselect->head;
+		mainfocus=NULL;
 		ytemp = 0;
 	}
 	else if (keys & KEY_DOWN)
@@ -111,18 +113,21 @@ static s16 tapFocus(float x, float y, s16 ytemp)
 	y = 120 - (((y - 5) * 240) / 229);
 	if (headselect != NULL)
 	{
-		folders *temp = mainfocus->head;
-		while (temp != NULL)
+		if(subfocus!=NULL)
 		{
-			if ((x >= temp->x) && (x <= (temp->x + 270)))
+			folders *temp = headselect->head;
+			while (temp != NULL)
 			{
-				if ((y <= temp->y) && (y >= (temp->y - 45)))
+				if ((x >= temp->x) && (x <= (temp->x + 270)))
 				{
-					subfocus = temp;
-					return ytemp;
+					if ((y <= temp->y) && (y >= (temp->y - 45)))
+					{
+						subfocus = temp;
+						return ytemp;
+					}
 				}
+				temp = temp->next;
 			}
-			temp = temp->next;
 		}
 	}
 	else if (kinghead != NULL)
@@ -138,6 +143,8 @@ static s16 tapFocus(float x, float y, s16 ytemp)
 					if (temp == mainfocus)
 					{
 						headselect = mainfocus;
+						subfocus=headselect->head;
+						mainfocus=NULL;
 						ytemp = 0;
 					}
 					else
@@ -230,11 +237,10 @@ void textSet(float x, float y, char *name)
 	C2D_Text Name_p;
 	float left = (x + 160.0f) * (400.0f / 320.0f);
 	float top = 240.0f - (y + 120.0f);
-	C2D_TextParse(&Name_p, nameBuf, name);
-	C2D_TextOptimize(&Name_p);
-
 	C2D_Prepare();
 	C2D_TextBufClear(nameBuf);
+	C2D_TextParse(&Name_p, nameBuf, name);
+	C2D_TextOptimize(&Name_p);
 	C2D_DrawText(&Name_p, C2D_AtBaseline | C2D_WithColor | C2D_AlignCenter | C2D_WordWrap, left + (buttonwidth / 2) * 400.0f / 320.0f, top + buttonheight / 2 + 10.0f, 0.2f, 1.2f, 1.1f, C2D_Color32f(0.0f, 0.0f, 0.0f, 1.0f), 200.0f);
 	C2D_Flush();
 }
@@ -285,17 +291,17 @@ static s16 checkBounds(s16 ytemp)
 
 static float padHandleDown(float padset_d)
 {
-	if (headselect != NULL && subfocus == NULL)
+
+	if (headselect!= NULL)
 	{
-		subfocus = headselect->head;
-	}
-	else if (headselect != NULL)
-	{
-		if (subfocus != headselect->tail)
+		if(subfocus!=NULL)
 		{
-			subfocus = subfocus->next;
-		}
-		return (padset_d + paddleBounds_d(subfocus->y));
+			if (subfocus != headselect->tail)
+			{
+				subfocus = subfocus->next;
+			}
+			return (padset_d + paddleBounds_d(subfocus->y));
+		}	
 	}
 	else if (mainfocus != NULL)
 	{
@@ -305,7 +311,7 @@ static float padHandleDown(float padset_d)
 		}
 		return (padset_d + paddleBounds_d(mainfocus->y));
 	}
-	else
+	else 
 	{
 		mainfocus = kinghead;
 	}
@@ -329,14 +335,16 @@ static float paddleBounds_d(float val_d)
 }
 static float padHandleUP(float padset_u)
 {
-
 	if (headselect != NULL)
 	{
-		if (subfocus != headselect->head)
+		if(subfocus!=NULL)
 		{
-			subfocus = subfocus->prev;
-		}
-		return (padset_u + paddleBounds_u(subfocus->y));
+			if (subfocus != headselect->head)
+			{
+				subfocus = subfocus->prev;
+			}
+			return (padset_u + paddleBounds_u(subfocus->y));
+		}	
 	}
 	else if (mainfocus != NULL)
 	{

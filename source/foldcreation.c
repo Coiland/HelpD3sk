@@ -11,14 +11,12 @@ headfolders *kingtail = NULL;
 u8 maincount = 0;
 
 /*!
- * @param       name     Name to be displayed on the button
- * @param       text     Text explaining the button to be 
- *                       displayed on the top of the screen
- * @param       king    Name of the head you want  the button
- *                      to be connected to. Pass NULL if you want to create a new head
- * @result              A pointer to new button 
+ * @param       name        Name to be displayed on the button.
+ * @param       headname    Name of the head node you want the button 
+ *                          to be connected to on click.
+ * @param       text        Text displayed on-click.                  
 */
-void addfolder(char *name, char *headname)
+void addfolder(char *name, char *headname,char* text)
 {
     headfolders *temp = kinghead;
     while (strcmp(headname, temp->name) != 0)
@@ -48,7 +46,8 @@ void addfolder(char *name, char *headname)
     temp->tail = new;
     new->name = name;
     new->next = NULL;
-    //new->text = text;
+    new->text = text;
+    new->text_size=strlen(text);
 }
 
 void addfolderhead(char *name,char *description)

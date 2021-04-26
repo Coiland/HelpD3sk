@@ -4,6 +4,6 @@
 
 #ifndef TOPDISPLAY_H
 #define TOPDISPLAY_H
-void topscreenrender();
+void topscreenrender(u32);
 void topSetup();
 #endif
