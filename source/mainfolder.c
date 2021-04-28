@@ -9,7 +9,7 @@ void mainDisplay(s16 i)
 
 	while (temp != NULL)
 	{
-		
+
 		Mtx_Identity(&MV);
 		Mtx_Translate(&MV, -150.0f, -120.0f - y * 55.0 + i, 0.0f, true);
 

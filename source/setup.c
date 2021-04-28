@@ -19,14 +19,12 @@ C3D_AttrInfo attrInfo;
 
 static void *BUTTON_DATA, *SLIDER_DATA, *LIMIT_DATA, *TABLEBACK_DATA, *CANVAS_DATA, *TABLE_DATA, *LEGS_DATA;
 
-
 static C3D_Tex table_tex;
 
 u16 buttonwidth = 270;
 u16 buttonheight = 45;
 u32 mainsize = 100;
 u32 subsize = 400;
-
 
 static bool loadTextureFromMem(C3D_Tex *tex, C3D_TexCube *cube, const void *data, size_t size)
 {

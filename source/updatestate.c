@@ -50,8 +50,8 @@ void updateState(u32 keys, touchPosition screen) //printf("\x1b[14;10H Focus tex
 	else if ((keys & KEY_A) && mainfocus != NULL && headselect == NULL)
 	{
 		headselect = mainfocus;
-		subfocus=headselect->head;
-		mainfocus=NULL;
+		subfocus = headselect->head;
+		mainfocus = NULL;
 		ytemp = 0;
 	}
 	else if (keys & KEY_DOWN)
@@ -113,7 +113,7 @@ static s16 tapFocus(float x, float y, s16 ytemp)
 	y = 120 - (((y - 5) * 240) / 229);
 	if (headselect != NULL)
 	{
-		if(subfocus!=NULL)
+		if (subfocus != NULL)
 		{
 			folders *temp = headselect->head;
 			while (temp != NULL)
@@ -143,8 +143,8 @@ static s16 tapFocus(float x, float y, s16 ytemp)
 					if (temp == mainfocus)
 					{
 						headselect = mainfocus;
-						subfocus=headselect->head;
-						mainfocus=NULL;
+						subfocus = headselect->head;
+						mainfocus = NULL;
 						ytemp = 0;
 					}
 					else
@@ -292,16 +292,16 @@ static s16 checkBounds(s16 ytemp)
 static float padHandleDown(float padset_d)
 {
 
-	if (headselect!= NULL)
+	if (headselect != NULL)
 	{
-		if(subfocus!=NULL)
+		if (subfocus != NULL)
 		{
 			if (subfocus != headselect->tail)
 			{
 				subfocus = subfocus->next;
 			}
 			return (padset_d + paddleBounds_d(subfocus->y));
-		}	
+		}
 	}
 	else if (mainfocus != NULL)
 	{
@@ -311,7 +311,7 @@ static float padHandleDown(float padset_d)
 		}
 		return (padset_d + paddleBounds_d(mainfocus->y));
 	}
-	else 
+	else
 	{
 		mainfocus = kinghead;
 	}
@@ -337,14 +337,14 @@ static float padHandleUP(float padset_u)
 {
 	if (headselect != NULL)
 	{
-		if(subfocus!=NULL)
+		if (subfocus != NULL)
 		{
 			if (subfocus != headselect->head)
 			{
 				subfocus = subfocus->prev;
 			}
 			return (padset_u + paddleBounds_u(subfocus->y));
-		}	
+		}
 	}
 	else if (mainfocus != NULL)
 	{

@@ -26,7 +26,7 @@ struct folders
 };
 extern headfolders *kinghead;
 extern headfolders *kingtail;
-void addfolderhead(char *,char*);
-void addfolder(char *name, char *headname,char *text);
+void addfolderhead(char *, char *);
+void addfolder(char *name, char *headname, char *text);
 extern u8 maincount;
 #endif

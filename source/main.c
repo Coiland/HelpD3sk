@@ -1,6 +1,3 @@
-/*
---------Author: Insteadof2--------
-*/
 
 #include "setup.h"
 #include "updatestate.h"
@@ -18,7 +15,7 @@ int main(int argc, char *argv[])
 	gfxInitDefault();
 	C3D_Init(C3D_DEFAULT_CMDBUF_SIZE);
 	C2D_Init(C2D_DEFAULT_MAX_OBJECTS);
-	time_t end_time=0,start_time=0;
+	time_t end_time = 0, start_time = 0;
 	touchPosition screen;
 
 	C3D_RenderTarget *top = C3D_RenderTargetCreate(240, 400, GPU_RB_RGBA8, GPU_RB_DEPTH24_STENCIL8);
@@ -33,7 +30,7 @@ int main(int argc, char *argv[])
 
 	while (aptMainLoop())
 	{
-		
+
 		hidScanInput();
 		u32 kDown = hidKeysDown();
 		if (kDown & KEY_START)
@@ -48,9 +45,9 @@ int main(int argc, char *argv[])
 		C3D_RenderTargetClear(top, C3D_CLEAR_ALL, CLEAR_COLOR, 0);
 		C3D_FrameDrawOn(top);
 		C2D_SceneTarget(top);
-		start_time=osGetTime();
-		topscreenrender(kDown,(start_time-end_time)/1000.0);
-		end_time=osGetTime();
+		start_time = osGetTime();
+		topscreenrender(kDown, (start_time - end_time) / 1000.0);
+		end_time = osGetTime();
 
 		C3D_FrameEnd(0);
 	}

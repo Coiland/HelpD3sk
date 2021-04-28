@@ -13,7 +13,7 @@ u8 maincount = 0;
  *                          to be connected to on click.
  * @param       text        Text displayed on-click.                  
 */
-void addfolder(char *name, char *headname,char* text)
+void addfolder(char *name, char *headname, char *text)
 {
     headfolders *temp = kinghead;
     while (strcmp(headname, temp->name) != 0)
@@ -44,10 +44,10 @@ void addfolder(char *name, char *headname,char* text)
     new->name = name;
     new->next = NULL;
     new->text = text;
-    new->text_size=strlen(text);
+    new->text_size = strlen(text);
 }
 
-void addfolderhead(char *name,char *description)
+void addfolderhead(char *name, char *description)
 {
     headfolders *new = (headfolders *)malloc(sizeof(headfolders));
 
