@@ -1,3 +1,4 @@
+
 #include "updatestate.h"
 #include "setup.h"
 #include "subfolder.h"
@@ -26,7 +27,6 @@ static u16 tapy = 0;
 static u8 i = 0;
 static u8 holdcount = 0;
 static float ytemp = 0;
-static u8 keysdelay = 0;
 
 static float maxtranslate = 0;
 static float subtranslate = 0;

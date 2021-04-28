@@ -6,7 +6,7 @@
 #include "setup.h"
 
 #define VERTEX_SIZE (sizeof(vertex))
-#define ANIMATION_RATE (0.02f)
+#define ANIMATION_RATE ( 0.4*M_PI)
 #define CHARSPPAGE 570
 
 static char default_text[]=
@@ -50,10 +50,10 @@ void topSetup()
     C2D_TextOptimize(&HelpD3sk);
 }
 
-void topscreenrender(u32 keys)
+void topscreenrender(u32 keys,float diff)
 {
-    static float i = 0;
-   
+    static float i = 0; 
+    
     drawCanvas();
     if (subfocus != NULL)
     {
@@ -123,7 +123,7 @@ void topscreenrender(u32 keys)
             last_defstate=1;
         }
     }
-    i += ANIMATION_RATE;
+    i=fmod(i + ANIMATION_RATE*diff,M_PI*2);
 }
 
 void topSetMV(threevec *scale, threevec *angle, threevec *axis, threevec *translate, u16 numvertices)
