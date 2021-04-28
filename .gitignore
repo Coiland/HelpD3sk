@@ -4,3 +4,5 @@ HelpD3sk.3dsx
 HelpD3sk.cia
 HelpD3sk.elf
 HelpD3sk.smdh
+.editorconfig
+romfs/*
