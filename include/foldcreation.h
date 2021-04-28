@@ -1,7 +1,4 @@
 
-/*
---------Author: Insteadof2--------
-*/
 #ifndef FOLDCREATION_H
 #define FOLDCREATION_H
 #include "headers.h"

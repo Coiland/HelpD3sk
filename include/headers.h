@@ -1,6 +1,4 @@
-/*
---------Author: Insteadof2--------
-*/
+
 #ifndef HEADERS_H
 #define HEADERS_H
 

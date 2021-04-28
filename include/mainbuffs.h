@@ -1,6 +1,4 @@
-/*
---------Author: Insteadof2--------
-*/
+
 #ifndef MAINBUFFS_H
 #define MAINBUFFS_H
 #include "headers.h"

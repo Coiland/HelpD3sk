@@ -1,7 +1,10 @@
 #include "textbuffs.h"
 #include "foldcreation.h"
 C2D_TextBuf nameBuf;
-
+/*
+*This array is for the main page buttons. To add a button add a column to the row. Give it a name
+* and a description to be displayed on the screen.
+*/
 main_struct the_head_array[]=
 {
     {"this is the ", "does things"},
@@ -12,7 +15,11 @@ main_struct the_head_array[]=
     {"six","does things"},
     {"seven","does things"},
 };
-
+/*
+*This array is for the sub page buttons. First column is to diplay the information that will be displayed on the button.
+*Second column is to attach the button to a parent button from the main page (See the names above to attach).
+*Third column is to display the text of the button once clicked.
+*/
 sub_struct the_sub_array[]=
 {
     {"mombo", "second","The history of the 3ds is "},

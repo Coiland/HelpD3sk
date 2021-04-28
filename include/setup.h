@@ -1,6 +1,3 @@
-/*
---------Author: Insteadof2--------
-*/
 
 #ifndef SETUP_H
 #define SETUP_H

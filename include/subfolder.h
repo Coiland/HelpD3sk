@@ -1,6 +1,3 @@
-/*
---------Author: Insteadof2--------
-*/
 
 #ifndef SUBFOLDER_H
 #define SUBFOLDER_H

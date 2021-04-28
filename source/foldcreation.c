@@ -1,6 +1,3 @@
-/*
---------Author: Insteadof2--------
-*/
 
 #include "foldcreation.h"
 #include "headers.h"
