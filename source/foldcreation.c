@@ -29,7 +29,7 @@ void addfolder(char *name, char *headname, char *text)
     folders *new = (folders *)malloc(sizeof(folders));
     if (new == NULL)
     {
-        return;
+        sceneExit();
     }
     if (temp->head == NULL)
     {
@@ -53,7 +53,7 @@ void addfolderhead(char *name, char *description)
 
     if (new == NULL)
     {
-        return;
+        sceneExit();
     }
     if (kinghead == NULL)
     {

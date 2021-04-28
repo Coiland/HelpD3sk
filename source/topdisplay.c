@@ -188,6 +188,10 @@ static void drawmainWrapper(u8 i)
 
     snprintf(page_buf, sizeof(page_buf), "%d/%d", i, max_pages);
     char *text_page = malloc(CHARSPPAGE * sizeof(char));
+    if(text_page==NULL)
+    {
+        sceneExit();
+    }
     memcpy(text_page, subfocus->text + ((page_num - 1) * CHARSPPAGE), CHARSPPAGE * sizeof(char));
     C2D_TextBufClear(dynamicsBuf);
     C2D_TextParse(&main_text[0], dynamicsBuf, text_page);

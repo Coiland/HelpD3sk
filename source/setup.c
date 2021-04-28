@@ -127,4 +127,8 @@ void sceneExit()
 	//freeing shader
 	shaderProgramFree(&program);
 	DVLB_Free(vshader_dvlb);
+	
+	C2D_Fini();
+	C3D_Fini();
+	gfxExit();
 }
