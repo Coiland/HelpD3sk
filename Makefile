@@ -38,9 +38,10 @@ DATA		:=	data
 INCLUDES	:=	include
 GRAPHICS	:=	gfx
 GFXBUILD	:=	$(BUILD)
-#ROMFS		:=	romfs
-#GFXBUILD	:=	$(ROMFS)/gfx
-
+APP_TITLE   :=  HelpD3sk
+APP_ICON	:=	../HelpD3sk.png
+APP_AUTHOR  :=	Coiland
+APP_DESCRIPTION	:=	Application for beginners to 3DS homebrew.
 #---------------------------------------------------------------------------------
 # options for code generation
 #---------------------------------------------------------------------------------
@@ -162,10 +163,10 @@ endif
 
 #---------------------------------------------------------------------------------
 all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
-	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
+	$(MAKE) -w -C $(BUILD) -f $(CURDIR)/Makefile
 
 $(BUILD):
-	@mkdir -p $@
+	mkdir -p $@
 
 ifneq ($(GFXBUILD),$(BUILD))
 $(GFXBUILD):

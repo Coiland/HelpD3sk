@@ -27,6 +27,7 @@ static u16 tapy = 0;
 static u8 i = 0;
 static u8 holdcount = 0;
 static float ytemp = 0;
+static float save_ytemp = 0;
 
 static float maxtranslate = 0;
 static float subtranslate = 0;
@@ -42,16 +43,25 @@ void updateState(u32 keys, touchPosition screen) //printf("\x1b[14;10H Focus tex
 	}
 	if (keys & KEY_B)
 	{
-		mainfocus = NULL;
+		if (headselect == NULL)
+		{
+			mainfocus = NULL;
+			ytemp = 0;
+			save_ytemp = 0;
+		}
+		else
+		{
+			headselect = NULL;
+			ytemp = save_ytemp;
+		}
 		subfocus = NULL;
-		headselect = NULL;
-		ytemp = 0;
 	}
 	else if ((keys & KEY_A) && mainfocus != NULL && headselect == NULL)
 	{
 		headselect = mainfocus;
 		subfocus = headselect->head;
-		mainfocus = NULL;
+		//mainfocus = NULL;
+		save_ytemp = ytemp;
 		ytemp = 0;
 	}
 	else if (keys & KEY_DOWN)
@@ -144,7 +154,8 @@ static s16 tapFocus(float x, float y, s16 ytemp)
 					{
 						headselect = mainfocus;
 						subfocus = headselect->head;
-						mainfocus = NULL;
+						//mainfocus = NULL;
+						save_ytemp = ytemp;
 						ytemp = 0;
 					}
 					else
@@ -178,15 +189,30 @@ static void display(s16 i)
 
 void sliderout(s16 i)
 {
-	float t;
-	if (maxtranslate == 0)
+	float t=0;
+	if(headselect!=NULL)
 	{
-		t = 0;
+		if(subtranslate==0)
+		{
+			t=0;
+		}
+		else
+		{
+			t=i/subtranslate;
+		}
 	}
 	else
 	{
-		t = i / (maxtranslate);
+		if (maxtranslate == 0)
+		{
+			t = 0;
+		}
+		else
+		{
+			t = i / (maxtranslate);
+		}
 	}
+
 	setBuffs(&sliderInfo, &attrInfo, 1, 0);
 	Mtx_Identity(&MV);
 	Mtx_Translate(&MV, -160.0f, -120.0f - t * 150.0f, 0.0f, true);
@@ -241,7 +267,7 @@ void textSet(float x, float y, char *name)
 	C2D_TextBufClear(nameBuf);
 	C2D_TextParse(&Name_p, nameBuf, name);
 	C2D_TextOptimize(&Name_p);
-	C2D_DrawText(&Name_p, C2D_AtBaseline | C2D_WithColor | C2D_AlignCenter | C2D_WordWrap, left + (buttonwidth / 2) * 400.0f / 320.0f, top + buttonheight / 2 + 10.0f, 0.2f, 1.2f, 1.1f, C2D_Color32f(0.0f, 0.0f, 0.0f, 1.0f), 200.0f);
+	C2D_DrawText(&Name_p, C2D_AtBaseline | C2D_WithColor | C2D_AlignCenter | C2D_WordWrap, left + (buttonwidth / 2) * 400.0f / 320.0f, top + buttonheight / 2 + 10.0f, 0.2f, 0.7f, 0.7f, C2D_Color32f(0.0f, 0.0f, 0.0f, 1.0f), 220.0f);
 	C2D_Flush();
 }
 

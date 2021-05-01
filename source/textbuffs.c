@@ -7,61 +7,49 @@ C2D_TextBuf nameBuf;
 */
 main_struct the_head_array[] =
     {
-        {"this is the ", "does things"},
-        {"second", "does things2"},
-        {"third", "does things3"},
-        {"fourth", "does things4"},
-        {"fifth", "does things"},
-        {"six", "does things"},
-        {"seven", "does things"},
+        {"Getting Started", "Basic setup and usage"},
+        {"Reccomended", "Apps and games to improve your experience"},
+        {"Architecture", "Overview of 3DS hardware"},
+        {"Development", "Create your own homebrew"},
+        {"Exploits", "Overview of exploits on latest FW"},
+        {"Misc", "Collection of information"},
+        {"Resources", "Links and sources to learn more"},
 };
 /*
 *This array is for the sub page buttons. First column is to diplay the information that will be displayed on the button.
 *Second column is to attach the button to a parent button from the main page (See the names above to attach).
-*Third column is to display the text of the button once clicked.
+*Third column is to display the text of the button once clicked. Wordwrap from the C2D library will negate spaces beyond 
+*those which make the sentence wrap to the next line. This can cause the page number to be greater then the apparent text one screen
+*so care to put the appropriate spacing if trying to put a new line. spaces " " are required instead of \n for strlen IF YOU HAVE MORE 
+*THAN ONE PAGE DON'T USE "\n"
 */
 sub_struct the_sub_array[] =
     {
-        {"mombo", "second", "The history of the 3ds is "},
-        {"mom", "second", "The place you want to be, is here, this is an experience not a a show, "
-                          "this is meant for people like you and menow i dont want to put any predjucide on you or "
-                          "anyone for that matter but this experience has lead me to unimaginable circumsstances which "
-                          "I could not fathom, thiss is life changing I am no longer a man of god but a man of many words "
-                          "a preservation this is history in the making  we are the people of god, worship, love , live... you "
-                          "only have one life"
-                          "this is meant for people like you and menow i dont want to put any predjucide on you or "
-                          "anyone for that   matter but this experience has lead me to unimaginable circumsstances which "
-                          "I could not fathom, thiss is life changing I am no longer a man of god but a man of many words "
-                          "a preservation this is history in the making  we are the people of god, worship, love , live... you "
-                          "only have one life"
-                          "The place you want to be, is here, this is an experience not a a show, "
-                          "this is meant for people like you and menow i dont want to put any predjucide on you or "
-                          "anyone for that matter but this experience has lead me to unimaginable circumsstances which "
-                          "I could not fathom, thiss is life changing I am no longer a man of god but a man of many words "
-                          "a preservation this is history in the making  we are the people of god, worship, love , live... you "
-                          "only have one life"
-                          "this is meant for people like you and menow i dont want to put any predjucide on you or "
-                          "anyone for that   matter but this experience has lead me to unimaginable circumsstances which "
-                          "I could not fathom, thiss is life changing I am no longer a man of god but a man of many words "
-                          "a preservation this is history in the making  we are the people of god, worship, love , live... you "
-                          "only have one life"
-                          "The place you want to be, is here, this is an experience not a a show, "
-                          "this is meant for people like you and menow i dont want to put any predjucide on you or "
-                          "anyone for that matter but this experience has lead me to unimaginable circumsstances which "
-                          "I could not fathom, thiss is life changing I am no longer a man of god but a man of many words "
-                          "a preservation this is history in the making  we are the people of god, worship, love , live... you "
-                          "only have one life"
-                          "this is meant for people like you and menow i dont want to put any predjucide on you or "
-                          "anyone for that   matter but this experience has lead me to unimaginable circumsstances which "
-                          "I could not fathom, thiss is life changing I am no longer a man of god but a man of many words "
-                          "a preservation this is history in the making  we are the people of god, worship, love , live... you "
-                          "only have one life"},
-        {"mom", "second", "The place you want to be"},
-        {"mom", "second", "The place you want to be"},
-        {"mom", "second", "The place you want to be"},
-        {"mom", "second", "The place you want to be"},
-        {"mom", "second", "The place you want to be"},
-        {"mom", "third", "The place you want to be in the third column"}};
+        {"Anemone3DS", "Getting Started", "Use this to set custom themese on your 3DS home screen. Go to \"themeplaza.art/themes\" to look for 3DS home screen themes.\n"
+                                          "1. In Anemone3DS click R to open the QR Code Scanner and scan the code in Theme Plaza.\n"
+                                          "2. Download the theme zip file and place it in the \"Themes\" folder in the root of your "
+                                          "SD directory.\n"
+                                          "Follow the instructions in Anenome3DS to set a theme. Visit:\n\"github.com/astronautlevel2/Anemone3DS\" for more info."},
+        {"Checkpoint", "Getting Started", "Checkpoint is used to backup your save files and overwrite your current saves. Visit:\n\"github.com/FlagBrew/Checkpoint\" for more info."},
+       {"Universal-Updater", "Getting Started", "Universal-Updater makes downloading other homebrew applications very easy. It provides a large library of many of the available homebrew applications\n"
+        "The list of available homebrew applications can be seen on their website at:\n\"db.universal-team.net/3ds/\".\nVisit:\n\"universal-team.net/projects/universal-updater.ht ml\" for more info."},
+        {"GodMode9", "Getting Started", "Fill In"},
+        {"FBI", "Getting Started", ""},
+        {"Luma3DS", "Getting Started", ""},
+        {"Custom-Install", "Reccomended", "Allows installation of CIA files directly to SD card from your PC. This drastically reduces installation time."
+                                          " \"github.com/ihaveamac/custom-install\" for more info."},
+        {"CTGP-7", "Reccomended", "A modpack for Mario Kart 7 adding custom tracks, characters and other features. Adds a lot of depth to the original "
+                                  "Mario Kart 7 game and definitely worth the download. Visit:\n\"ctgp-7.github.io\" for more info."},
+        {"Example", "Architecture", "Fill In"},
+        {"Example", "Development", "Fill In"},
+        {"Example", "Exploits", "Fill In"},
+        {"Example", "Misc", "Fill In"},
+        {"3dbrew", "Resources", "\"3dbrew.org/wiki/Main_Page\"\nThe Wikipedia for the 3DS. Almost all information on any topic related to "
+                                "the 3DS can be found here."},
+        {"Nintendo HB Discord", "Resources", "The Nintendo Homebrew Discord is very helpful for information related to all Nintendo systems. Join this Discord for "
+        "help with nintendo homebrew development, hacking nintendo consoles or to just chat in general. Visit:\n\"github.com/nh-server\" for a link to the Discord server."},
+
+};
 void createFolders()
 {
     nameBuf = C2D_TextBufNew(50);

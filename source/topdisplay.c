@@ -179,7 +179,7 @@ static void drawmaintext()
 {
 
     C2D_Prepare();
-    C2D_DrawText(&main_text[0], C2D_AtBaseline | C2D_WithColor | C2D_AlignLeft | C2D_WordWrap, 15, 25, 0.5f, 0.60f, 0.60f, C2D_Color32f(0.0f, 0.0f, 0.0f, 1.0f), 370.0f);
+    C2D_DrawText(&main_text[0], C2D_AtBaseline | C2D_WithColor | C2D_WordWrap, 15, 25, 0.5f, 0.60f, 0.60f, C2D_Color32f(0.0f, 0.0f, 0.0f, 1.0f), 370.0f);
     C2D_DrawText(&main_text[1], C2D_AtBaseline | C2D_WithColor | C2D_AlignRight, 390, 9, 0.5f, 0.4f, 0.38f, C2D_Color32f(0.0f, 0.0f, 0.0f, 1.0f));
     C2D_Flush();
 }
@@ -188,7 +188,7 @@ static void drawmainWrapper(u8 i)
 
     snprintf(page_buf, sizeof(page_buf), "%d/%d", i, max_pages);
     char *text_page = malloc(CHARSPPAGE * sizeof(char));
-    if(text_page==NULL)
+    if (text_page == NULL)
     {
         sceneExit();
     }
