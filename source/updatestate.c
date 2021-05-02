@@ -189,16 +189,16 @@ static void display(s16 i)
 
 void sliderout(s16 i)
 {
-	float t=0;
-	if(headselect!=NULL)
+	float t = 0;
+	if (headselect != NULL)
 	{
-		if(subtranslate==0)
+		if (subtranslate == 0)
 		{
-			t=0;
+			t = 0;
 		}
 		else
 		{
-			t=i/subtranslate;
+			t = i / subtranslate;
 		}
 	}
 	else
