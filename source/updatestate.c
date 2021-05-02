@@ -251,7 +251,7 @@ void setBuffs(C3D_BufInfo *vbo, C3D_AttrInfo *attributes, u8 projflag, u8 textur
 	}
 	else
 	{
-		C3D_TexEnv *env = C3D_GetTexEnv(1);
+		C3D_TexEnv *env = C3D_GetTexEnv(0);
 		C3D_TexEnvInit(env);
 		C3D_TexEnvSrc(env, C3D_Both, GPU_PRIMARY_COLOR, 0, 0);
 		C3D_TexEnvFunc(env, C3D_Both, GPU_REPLACE);

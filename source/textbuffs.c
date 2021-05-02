@@ -33,21 +33,30 @@ sub_struct the_sub_array[] =
         {"Checkpoint", "Getting Started", "Checkpoint is used to backup your save files and overwrite your current saves. Visit:\n\"github.com/FlagBrew/Checkpoint\" for more info."},
        {"Universal-Updater", "Getting Started", "Universal-Updater makes downloading other homebrew applications very easy. It provides a large library of many of the available homebrew applications\n"
         "The list of available homebrew applications can be seen on their website at:\n\"db.universal-team.net/3ds/\".\nVisit:\n\"universal-team.net/projects/universal-updater.ht ml\" for more info."},
-        {"GodMode9", "Getting Started", "Fill In"},
-        {"FBI", "Getting Started", ""},
-        {"Luma3DS", "Getting Started", ""},
-        {"Custom-Install", "Reccomended", "Allows installation of CIA files directly to SD card from your PC. This drastically reduces installation time."
-                                          " \"github.com/ihaveamac/custom-install\" for more info."},
+        {"GodMode9", "Getting Started", "GodMode9 is a full acess file browser. This gives you access to the files in the FAT partitions in the system NAND and to your SD card."
+        "It provides the capability to copy, delete, rename files and create folders. There is much more info provided here:\n\"github.com/d0k3/GodMode9\"\nor you can visit the README in GM9 on your 3ds by holding"
+        " \"START\" on system startup and going to the V drive."},
+        {"FBI", "Getting Started","FBI can be used to install CIA's, manage applications or as a file browser. CIA's can either be installed from your SD card or wirelessly with a URL or QR code. For more information"
+        "visit:\ngithub.com/Steveice10/FBI for more details."},
+        {"Luma3DS", "Getting Started", "github.com/LumaTeam/Luma3DS/wiki"},
+        {"Custom-Install", "Reccomended", "Custom-Install allows installation of CIA files directly to SD card from your PC. This drastically reduces installation time."
+                                          "Visit:\n\"github.com/ihaveamac/custom-install\" for more info."},
         {"CTGP-7", "Reccomended", "A modpack for Mario Kart 7 adding custom tracks, characters and other features. Adds a lot of depth to the original "
                                   "Mario Kart 7 game and definitely worth the download. Visit:\n\"ctgp-7.github.io\" for more info."},
-        {"Example", "Architecture", "Fill In"},
+        {"Overview", "Architecture", "Fill In"},
+        {"ARM11", "Architecture", "Fill In"},
+        {"ARM9", "Architecture", "Fill In"},
+        {"Memory", "Architecture", "Fill In"},
+        {"Storage", "Architecture", "Fill In"},
         {"Example", "Development", "Fill In"},
         {"Example", "Exploits", "Fill In"},
         {"Example", "Misc", "Fill In"},
-        {"3dbrew", "Resources", "\"3dbrew.org/wiki/Main_Page\"\nThe Wikipedia for the 3DS. Almost all information on any topic related to "
-                                "the 3DS can be found here."},
+        {"3dbrew", "Resources", "3dbrew is the Wikipedia for the 3DS. Almost all information on any topic related to "
+                                "the 3DS can be found there. Link:\n\"3dbrew.org/wiki/Main_Page\""},
         {"Nintendo HB Discord", "Resources", "The Nintendo Homebrew Discord is very helpful for information related to all Nintendo systems. Join this Discord for "
         "help with nintendo homebrew development, hacking nintendo consoles or to just chat in general. Visit:\n\"github.com/nh-server\" for a link to the Discord server."},
+        {"Talks", "Resources", "\"youtube.com/watch?v=WNUsKx2euFw\"\n\"youtube.com/watch?v=CbFykMLsYsE\""},
+        {"Write-up", "Resources", "\"reddit.com/r/3dshacks/comments/6iclr8/a_techni cal_overview_of_the_3ds_operating_system/\""},
 
 };
 void createFolders()
