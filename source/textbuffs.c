@@ -18,9 +18,12 @@ main_struct the_head_array[] =
 /*
 *This array is for the sub page buttons. First column is to diplay the information that will be displayed on the button.
 *Second column is to attach the button to a parent button from the main page (See the names above to attach).
-*Third column is to display the text of the button once clicked. Wordwrap from the C2D library will negate spaces beyond 
+*Third column is to display the text of the button once clicked. 
+*For paragraphs greater then the size of the screen I am toggling the pages by displaying sections of the paragraph at a time
+*and the user can use left and right on the key pads to switch between pages.
+*Wordwrap from the C2D library will negate spaces beyond 
 *those which make the sentence wrap to the next line. This can cause the page number to be greater then the apparent text one screen
-*so care to put the appropriate spacing if trying to put a new line. spaces " " are required instead of \n for strlen IF YOU HAVE MORE 
+*so care to put the appropriate spacing if trying to put a new line. spaces " " are required instead of \n for strlen. IF YOU HAVE MORE 
 *THAN ONE PAGE DON'T USE "\n"
 */
 sub_struct the_sub_array[] =
